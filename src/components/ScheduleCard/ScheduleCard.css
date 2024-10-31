@@ -1,0 +1,51 @@
+.schedule-card {
+  width: 175px;
+  height: 250px;
+
+  background-color: #703424;
+
+  border-radius: 15px;
+
+  transition: transform linear 0.2s;
+}
+
+.schedule-card:hover {
+  transform: scale(1.1);
+}
+
+.schedule-card__title {
+  height: 40px;
+
+  margin: 0;
+
+  background-color: #dac9b0;
+  color: #572618;
+
+  text-align: center;
+
+  border: solid 1px #572618;
+  border-radius: 15px 15px 0 0;
+}
+
+.schedule-card__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.schedule-card__recipe {
+  height: 70px;
+  width: 100%;
+  border-bottom: solid 2px #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.schedule-card__recipe:nth-of-type(3) {
+  border: 0;
+}

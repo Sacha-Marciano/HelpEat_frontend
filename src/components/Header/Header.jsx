@@ -6,15 +6,22 @@ import searchIcon from "../../assets/SearchIcon.svg";
 import helpEatLogo from "../../assets/HelpEatLogo.svg";
 import avatar from "../../assets/Temp_Avatar.png";
 
-function Header() {
+function Header({ onSearchClick, onAddClick }) {
   return (
     <header className="header">
-      <img className="header__search-icon" src={searchIcon} alt="Search icon" />
-      <button className="header__add-button">+ Add a recipe</button>
-      <Link to="/" className="header__link">
+      <img
+        className="header__search-icon"
+        src={searchIcon}
+        alt="Search icon"
+        onClick={onSearchClick}
+      />
+      <button className="header__add-button" onClick={onAddClick}>
+        + Add a recipe
+      </button>
+      <Link to="/" className="header__link-main">
         <img className="header__logo" src={helpEatLogo} alt="HelpEat logo" />
       </Link>
-      <Link to="/profile" className="header__link">
+      <Link to="/profile" className="header__link-profile">
         <span className="header__username"> User Name</span>
         <img className="header__avatar" src={avatar} />
       </Link>

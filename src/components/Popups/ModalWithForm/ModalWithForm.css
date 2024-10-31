@@ -1,0 +1,147 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.modal_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__content {
+  position: relative;
+  padding: 28px;
+  margin: 0;
+  width: 500px;
+  background-color: #dac9b0;
+  border-radius: 5px;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.modal__content::-webkit-scrollbar {
+  width: 0.4em;
+}
+
+.modal__content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
+
+.modal__content::-webkit-scrollbar-thumb {
+  background-color: #572618;
+}
+
+.modal__form {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__button_type_close {
+  width: 16px;
+  height: 16px;
+  background-image: url(../../../assets/CloseButton.png);
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 28px;
+}
+
+.modal__label {
+  max-width: 440px;
+  height: 52px;
+  position: relative;
+  display: block;
+  margin-top: 24px;
+  border: none;
+  border-bottom: 1px solid #00000080;
+  padding: 0;
+}
+
+.modal__input {
+  width: 100%;
+  padding: 0;
+  text-align: start;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  margin-top: 10px;
+  background-color: #dac9b0;
+}
+
+.modal__fieldset {
+  width: 173px;
+  height: 108px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  border: none;
+  padding: 0;
+}
+
+.modal__legend {
+  margin-bottom: 12px;
+}
+
+.modal__label_type_radio {
+  margin-top: 8px;
+}
+
+.modal__label_type:first-of-type {
+  margin-top: 0;
+}
+
+.modal__button_type_submit {
+  width: 124px;
+  height: 36px;
+  margin-top: 32px;
+  padding: 0;
+  background-color: #703424;
+  color: #dac9b0;
+  border-radius: 4px;
+}
+
+.modal__button_type_submit:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal__input_type_radio {
+  margin-right: 11px;
+  accent-color: #000;
+}
+
+.modal__button-alternate {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  margin: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: bold;
+}
+
+.modal__form_error-span {
+  color: red;
+}
+
+.modal__dropdown {
+  background-color: #703424;
+  color: #dac9b0;
+  margin: 0 0 0 15px;
+}

@@ -24,3 +24,9 @@ From new to old:
 
 - Implement back-end that will replace the third party API (will be used as recipe database)
 - Implement users handling in back-end(will be used to personalize feed based on user)
+
+## Credits
+
+Idea and design - Dana Marciano
+Favicon - nawicon on Flaticon
+Close Icon - inkubators on Flaticon
