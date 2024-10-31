@@ -12,6 +12,7 @@ function ModalWithForm({
   alternateOptionText,
   alternateOptionHandler,
   validationError,
+  validationErrorText,
 }) {
   const formRef = useRef();
 
@@ -29,7 +30,7 @@ function ModalWithForm({
           {children}
           {validationError ? (
             <span className="modal__form_error-span">
-              Wrong email or password
+              {validationErrorText}
             </span>
           ) : (
             " "

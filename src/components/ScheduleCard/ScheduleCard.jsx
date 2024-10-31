@@ -4,7 +4,7 @@ import RecipeCard from "../RecipeCard/RecipeCard";
 
 function ScheduleCard({
   day,
-  recipesOfday,
+  recipesOfDay,
   onScheduleClick,
   onCardClick,
   setSelectedCard,
@@ -16,10 +16,10 @@ function ScheduleCard({
       </h2>
       <div className="schedule-card__container">
         <div className="schedule-card__recipe">
-          {recipesOfday.breakfast !== "" ? (
+          {recipesOfDay.breakfast !== "" ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfday.breakfast}
+              name={recipesOfDay.breakfast}
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
             />
@@ -28,10 +28,10 @@ function ScheduleCard({
           )}
         </div>
         <div className="schedule-card__recipe">
-          {recipesOfday.lunch !== "" ? (
+          {recipesOfDay.lunch !== "" ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfday.lunch}
+              name={recipesOfDay.lunch}
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
             />
@@ -40,10 +40,10 @@ function ScheduleCard({
           )}
         </div>
         <div className="schedule-card__recipe">
-          {recipesOfday.dinner !== "" ? (
+          {recipesOfDay.dinner !== "" ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfday.dinner}
+              name={recipesOfDay.dinner}
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
             />

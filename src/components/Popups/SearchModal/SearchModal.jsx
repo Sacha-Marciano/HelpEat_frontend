@@ -1,8 +1,20 @@
+import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function SearchModal({ isOpen, onClose }) {
+function SearchModal({ isOpen, onClose, onSearch, validationError }) {
+  const [data, setData] = useState({ recipeSearch: "" });
+
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const _handleSubmit = (evt) => {
     evt.preventDefault();
+    onSearch(data);
   };
   return (
     <ModalWithForm
@@ -11,6 +23,8 @@ function SearchModal({ isOpen, onClose }) {
       isOpen={isOpen}
       onSubmit={_handleSubmit}
       buttonText="Search"
+      validationError={validationError}
+      validationErrorText={`No recipe contains the name "${data.recipeSearch}"`}
     >
       <label className="modal__label">
         Name of the recipe*
@@ -20,9 +34,9 @@ function SearchModal({ isOpen, onClose }) {
           placeholder="Search recipe"
           type="text"
           required
-          name="recipe-search"
-          //   value={data.email}
-          //   onChange={handleChange}
+          name="recipeSearch"
+          value={data.recipeSearch}
+          onChange={handleChange}
         />
       </label>
     </ModalWithForm>

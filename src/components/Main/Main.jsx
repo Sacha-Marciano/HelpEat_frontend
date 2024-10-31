@@ -7,18 +7,22 @@ import "./Main.css";
 import ScheduleCard from "../ScheduleCard/ScheduleCard";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
-import { daySchedule } from "../../utils/constants";
-
-function Main({ onScheduleClick, setSelectedCard, onCardClick, recipesList }) {
+function Main({
+  onScheduleClick,
+  setSelectedCard,
+  onCardClick,
+  recipesList,
+  schedule,
+}) {
   return (
     <main className="main">
       <div className="main__schedule">
-        {daySchedule.map((item) => {
+        {schedule.map((item) => {
           return (
             <ScheduleCard
               key={item._id}
               day={item.day}
-              recipesOfday={item.recipesOfDay}
+              recipesOfDay={item.recipesOfDay}
               onScheduleClick={onScheduleClick}
               onCardClick={onCardClick}
               setSelectedCard={setSelectedCard}

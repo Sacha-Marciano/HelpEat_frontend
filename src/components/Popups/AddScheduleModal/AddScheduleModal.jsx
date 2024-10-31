@@ -1,6 +1,6 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function AddScheduleModal({ isOpen, onClose, selectedDay, favoriteRecipes }) {
+function AddScheduleModal({ isOpen, onClose, favoriteRecipes, schedule }) {
   const _handleSubmit = (evt) => {
     evt.preventDefault();
   };
@@ -13,7 +13,15 @@ function AddScheduleModal({ isOpen, onClose, selectedDay, favoriteRecipes }) {
       buttonText="Save"
     >
       <label className="modal__label">
-        Add on : {selectedDay} For :
+        Add on:
+        <select className="modal__dropdown">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+        </select>
+      </label>
+      <label className="modal__label">
+        For :
         <select className="modal__dropdown">
           <option value="breakfast">Breakfast</option>
           <option value="lunch">Lunch</option>

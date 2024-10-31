@@ -57,7 +57,16 @@ export const recipes = [
   },
   {
     _id: 3,
-    name: "crepes",
+    name: "Steak",
+    image:
+      "https://images.unsplash.com/photo-1432139509613-5c4255815697?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8U3RlYWt8ZW58MHx8MHx8fDA%3D",
+
+    ingredients: ["this", "that", "another this"],
+    steps: ["do this", "do that", "do this then do that"],
+  },
+  {
+    _id: 4,
+    name: "Steak Bourguignon",
     image:
       "https://images.unsplash.com/photo-1432139509613-5c4255815697?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8U3RlYWt8ZW58MHx8MHx8fDA%3D",
 

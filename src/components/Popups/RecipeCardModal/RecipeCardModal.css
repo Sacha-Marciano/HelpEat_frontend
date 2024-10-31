@@ -57,6 +57,7 @@
 }
 
 .modal__recipe-subtitle {
+  margin: 20px 0;
 }
 
 .modal__recipe-ingredients {

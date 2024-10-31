@@ -15,10 +15,12 @@ import Footer from "../Footer/Footer";
 // Import popups
 import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
 import AddScheduleModal from "../Popups/AddScheduleModal/AddScheduleModal";
-import LoginModal from "../Popups/LoginModal/LoginModal";
 import RecipeCardModal from "../Popups/RecipeCardModal/RecipeCardModal";
 import SearchModal from "../Popups/SearchModal/SearchModal";
+import LoginModal from "../Popups/LoginModal/LoginModal";
+import RegisterModal from "../Popups/RegisterModal/RegisterModal";
 
+// Import constants
 import { recipes, daySchedule } from "../../utils/constants";
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
     steps: [],
   });
   const [displayedCards, setDisplayedCards] = useState(recipes);
+  const [validationError, setValidationError] = useState(false);
+  const [schedule, setSchedule] = useState(daySchedule);
 
   // Up-lifted functions
   // Open popups
@@ -58,6 +62,22 @@ function App() {
     setFavoriteRecipes([recipe, ...favoriteRecipes]);
   };
 
+  // Set diplayed card depending on search
+  const handleSearch = (search) => {
+    const searchResult = recipes.filter((item) =>
+      item.name
+        .toLowerCase()
+        .includes(search.recipeSearch.toLowerCase().split(" ")[0])
+    );
+    if (searchResult.length > 0) {
+      setDisplayedCards(searchResult);
+      closePopup();
+      setValidationError(false);
+    } else {
+      setValidationError(true);
+    }
+  };
+
   return (
     <div className="page">
       <Header onSearchClick={handleSearchClick} onAddClick={handleAddClick} />
@@ -71,6 +91,7 @@ function App() {
               onCardClick={handleCardClick}
               setSelectedCard={setSelectedCard}
               recipesList={displayedCards}
+              schedule={schedule}
             />
           }
         />
@@ -81,6 +102,8 @@ function App() {
       <SearchModal
         isOpen={openedPopup === "popup-search"}
         onClose={closePopup}
+        onSearch={handleSearch}
+        validationError={validationError}
       />
       <AddRecipeModal
         isOpen={openedPopup === "popup-add-recipe"}
@@ -89,8 +112,8 @@ function App() {
       <AddScheduleModal
         isOpen={openedPopup === "popup-schedule"}
         onClose={closePopup}
-        selectedDay="Monday"
         favoriteRecipes={favoriteRecipes}
+        schedule={schedule}
       />
       <RecipeCardModal
         isOpen={openedPopup === "popup-card-recipe"}
