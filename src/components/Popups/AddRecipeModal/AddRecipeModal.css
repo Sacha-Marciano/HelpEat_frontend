@@ -4,3 +4,8 @@
   color: #dac9b0;
   border-radius: 10px;
 }
+.modal__fieldset-ingredients {
+  display: flex;
+  border: none;
+  padding: 0;
+}

@@ -8,6 +8,8 @@ function ScheduleCard({
   onScheduleClick,
   onCardClick,
   setSelectedCard,
+  recipesList,
+  handleDeleteCard,
 }) {
   return (
     <div className="schedule-card">
@@ -16,36 +18,49 @@ function ScheduleCard({
       </h2>
       <div className="schedule-card__container">
         <div className="schedule-card__recipe">
-          {recipesOfDay.breakfast !== "" ? (
+          {recipesOfDay.breakfast > 0 ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfDay.breakfast}
+              card={
+                recipesList.filter(
+                  (item) => item._id === recipesOfDay.breakfast
+                )[0]
+              }
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
+              handleDeleteCard={handleDeleteCard}
             />
           ) : (
             ""
           )}
         </div>
         <div className="schedule-card__recipe">
-          {recipesOfDay.lunch !== "" ? (
+          {recipesOfDay.lunch > 0 ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfDay.lunch}
+              card={
+                recipesList.filter((item) => item._id === recipesOfDay.lunch)[0]
+              }
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
+              handleDeleteCard={handleDeleteCard}
             />
           ) : (
             ""
           )}
         </div>
         <div className="schedule-card__recipe">
-          {recipesOfDay.dinner !== "" ? (
+          {recipesOfDay.dinner > 0 ? (
             <RecipeCard
               isWholeCard={false}
-              name={recipesOfDay.dinner}
+              card={
+                recipesList.filter(
+                  (item) => item._id === recipesOfDay.dinner
+                )[0]
+              }
               setSelectedCard={setSelectedCard}
               onClick={onCardClick}
+              handleDeleteCard={handleDeleteCard}
             />
           ) : (
             " "

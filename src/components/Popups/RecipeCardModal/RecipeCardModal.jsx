@@ -3,7 +3,7 @@ import "./RecipeCardModal.css";
 function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
   const handleAddFavorite = () => {
     onAddFavorite({
-      _id: `${Math.random()}`,
+      _id: selectedCard._id,
       name: selectedCard.name,
       image: selectedCard.image,
       ingredients: selectedCard.ingredients,
@@ -31,7 +31,11 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
 
             <ul className="modal__recipe-ingredients">
               {selectedCard.ingredients.map((item, index) => {
-                return <li key={index}>{item}</li>;
+                return (
+                  <li key={index}>
+                    {selectedCard.measures[index]} {item}
+                  </li>
+                );
               })}
             </ul>
             <p className="modal__recipe-subtitle">Steps :</p>

@@ -43,6 +43,7 @@
 
 .modal__content::-webkit-scrollbar-thumb {
   background-color: #572618;
+  border-radius: 10px;
 }
 
 .modal__form {
@@ -66,7 +67,7 @@
 
 .modal__label {
   max-width: 440px;
-  height: 52px;
+  /* height: 52px; */
   position: relative;
   display: block;
   margin-top: 24px;

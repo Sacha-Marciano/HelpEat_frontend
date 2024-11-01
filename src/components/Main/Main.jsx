@@ -13,6 +13,7 @@ function Main({
   onCardClick,
   recipesList,
   schedule,
+  handleDeleteCard,
 }) {
   return (
     <main className="main">
@@ -26,6 +27,8 @@ function Main({
               onScheduleClick={onScheduleClick}
               onCardClick={onCardClick}
               setSelectedCard={setSelectedCard}
+              recipesList={recipesList}
+              handleDeleteCard={handleDeleteCard}
             />
           );
         })}
@@ -39,6 +42,7 @@ function Main({
               card={item}
               onClick={onCardClick}
               setSelectedCard={setSelectedCard}
+              handleDeleteCard={handleDeleteCard}
             />
           );
         })}

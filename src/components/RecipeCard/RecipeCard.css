@@ -12,6 +12,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+
+  margin: 0 0 20px 0;
 }
 
 .recipe-card:hover {
@@ -20,6 +22,7 @@
 
 .recipe-card__title {
   height: 30px;
+  max-width: 300px;
 
   padding: 5px;
   margin: 0 0 20px;
@@ -30,15 +33,24 @@
   border-radius: 15px;
 }
 
+.recipe-card_type_name-only {
+  display: flex;
+  align-items: center;
+}
+
 .recipe-card__title-only {
   height: 30px;
+  max-width: 150px;
 
   padding: 5px;
-  margin: 0;
+  margin: 0 10px 0 0;
 
   background-color: #dac9b0;
   color: #572618;
   border-radius: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
   transition: background-color linear 0.2s, color linear 0.2s;
 }
@@ -46,4 +58,13 @@
 .recipe-card__title-only:hover {
   background-color: rgba(155, 200, 0, 0.8);
   color: #fff;
+}
+
+.recipe-card__delete-schedule {
+  width: 30px;
+  height: 30px;
+  background-image: url(../../assets/CloseButtonWhite.png);
+  background-size: contain;
+  background-color: transparent;
+  border: none;
 }
