@@ -9,11 +9,11 @@ import RecipeCard from "../RecipeCard/RecipeCard";
 
 function Main({
   onScheduleClick,
-  setSelectedCard,
   onCardClick,
-  recipesList,
+  displayedCards,
   schedule,
-  handleDeleteCard,
+  handleDeleteFavorite,
+  recipesList,
 }) {
   return (
     <main className="main">
@@ -26,23 +26,21 @@ function Main({
               recipesOfDay={item.recipesOfDay}
               onScheduleClick={onScheduleClick}
               onCardClick={onCardClick}
-              setSelectedCard={setSelectedCard}
               recipesList={recipesList}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
             />
           );
         })}
       </div>
       <div className="main__recipe-container">
-        {recipesList.map((item) => {
+        {displayedCards.map((item) => {
           return (
             <RecipeCard
               key={item._id}
               isWholeCard={true}
               card={item}
               onClick={onCardClick}
-              setSelectedCard={setSelectedCard}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
             />
           );
         })}

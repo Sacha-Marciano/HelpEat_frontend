@@ -14,10 +14,13 @@
   align-items: flex-end;
 
   margin: 0 0 20px 0;
+
+  position: relative;
 }
 
 .recipe-card:hover {
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .recipe-card__title {
@@ -58,13 +61,25 @@
 .recipe-card__title-only:hover {
   background-color: rgba(155, 200, 0, 0.8);
   color: #fff;
+  cursor: pointer;
 }
 
-.recipe-card__delete-schedule {
-  width: 30px;
-  height: 30px;
-  background-image: url(../../assets/CloseButtonWhite.png);
-  background-size: contain;
-  background-color: transparent;
-  border: none;
+.recipe-card__delete-favorite {
+  width: 100px;
+  font-size: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  background-color: #dac9b0;
+  color: #572618;
+  border-radius: 10px;
+
+  transition: opacity linear 0.2s;
+
+  z-index: 1;
+}
+
+.recipe-card__delete-favorite:hover {
+  opacity: 0.5;
 }

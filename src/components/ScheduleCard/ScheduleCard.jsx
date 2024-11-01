@@ -7,9 +7,8 @@ function ScheduleCard({
   recipesOfDay,
   onScheduleClick,
   onCardClick,
-  setSelectedCard,
   recipesList,
-  handleDeleteCard,
+  handleDeleteFavorite,
 }) {
   return (
     <div className="schedule-card">
@@ -23,12 +22,11 @@ function ScheduleCard({
               isWholeCard={false}
               card={
                 recipesList.filter(
-                  (item) => item._id === recipesOfDay.breakfast
+                  (item) => item._id == recipesOfDay.breakfast
                 )[0]
               }
-              setSelectedCard={setSelectedCard}
               onClick={onCardClick}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
             />
           ) : (
             ""
@@ -39,11 +37,10 @@ function ScheduleCard({
             <RecipeCard
               isWholeCard={false}
               card={
-                recipesList.filter((item) => item._id === recipesOfDay.lunch)[0]
+                recipesList.filter((item) => item._id == recipesOfDay.lunch)[0]
               }
-              setSelectedCard={setSelectedCard}
               onClick={onCardClick}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
             />
           ) : (
             ""
@@ -54,13 +51,10 @@ function ScheduleCard({
             <RecipeCard
               isWholeCard={false}
               card={
-                recipesList.filter(
-                  (item) => item._id === recipesOfDay.dinner
-                )[0]
+                recipesList.filter((item) => item._id == recipesOfDay.dinner)[0]
               }
-              setSelectedCard={setSelectedCard}
               onClick={onCardClick}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
             />
           ) : (
             " "

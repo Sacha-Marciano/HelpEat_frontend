@@ -11,6 +11,8 @@ import Main from "../Main/Main";
 import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
+import Preloader from "../Preloader/Preloader";
+import NotFound from "../NotFound/NotFound";
 
 // Import popups
 import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
@@ -21,10 +23,11 @@ import LoginModal from "../Popups/LoginModal/LoginModal";
 import RegisterModal from "../Popups/RegisterModal/RegisterModal";
 
 // Import constants
-import { recipes, scheduleConst } from "../../utils/constants";
+import { recipesConst, scheduleConst } from "../../utils/constants";
 
 function App() {
   //Hooks
+  const [isLoading, setIsLoading] = useState(false);
   const [openedPopup, setOpenPopup] = useState("");
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [selectedCard, setSelectedCard] = useState({
@@ -33,6 +36,7 @@ function App() {
     ingredients: [],
     steps: [],
   });
+  const [recipes, setRecipes] = useState(recipesConst);
   const [displayedCards, setDisplayedCards] = useState(recipes);
   const [validationError, setValidationError] = useState(false);
   const [schedule, setSchedule] = useState(scheduleConst);
@@ -46,7 +50,8 @@ function App() {
   const handleSearchClick = () => {
     setOpenPopup("popup-search");
   };
-  const handleCardClick = () => {
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
     setOpenPopup("popup-card-recipe");
   };
   const handleScheduleClick = (evt) => {
@@ -69,6 +74,13 @@ function App() {
       console.log("Recipe is already favorite !");
     }
     closePopup();
+  };
+
+  // Delete selected recipe from schedule
+  const handleDeleteFavorite = (card) => {
+    console.log(card);
+    const temp = favoriteRecipes.filter((item) => item._id !== card._id);
+    setFavoriteRecipes(temp);
   };
 
   // Set diplayed card depending on search
@@ -94,34 +106,61 @@ function App() {
     setSchedule(temp);
     closePopup();
   };
-  // Delete selected recipe from schedule
-  const handleDeleteCard = (card) => {
-    console.log(card);
-    //This function will ne implemented when back end is ready
-  };
 
   // Handle new recipe submit and adds it to displayed card
   const handleSubmitRecipe = (card) => {
-    setDisplayedCards([card, ...displayedCards]);
+    setRecipes([card, ...recipes]);
+    setFavoriteRecipes([card, ...favoriteRecipes]);
     closePopup();
   };
+
+  // Every time the recipes array is modified, displayed card are rerendered
+  useEffect(() => {
+    setDisplayedCards(recipes);
+  }, [recipes]);
+
+  //Add event listener when mounting popup
+  useEffect(() => {
+    if (!openedPopup) return;
+    const handleEscClose = (evt) => {
+      if (evt.key === "Escape") {
+        closePopup();
+      }
+    };
+    const handleClickClose = (evt) => {
+      if (evt.target.classList[0] === "modal") {
+        closePopup();
+      }
+    };
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("click", handleClickClose);
+    //Remove event listener on unmounting
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+      document.removeEventListener("click", handleClickClose);
+    };
+  }, [openedPopup]);
 
   return (
     <div className="page">
       <Header onSearchClick={handleSearchClick} onAddClick={handleAddClick} />
       <Routes>
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<NotFound />} />
         <Route
           path="/"
           element={
-            <Main
-              onScheduleClick={handleScheduleClick}
-              onCardClick={handleCardClick}
-              setSelectedCard={setSelectedCard}
-              recipesList={displayedCards}
-              schedule={schedule}
-              handleDeleteCard={handleDeleteCard}
-            />
+            isLoading ? (
+              <Preloader />
+            ) : (
+              <Main
+                onScheduleClick={handleScheduleClick}
+                onCardClick={handleCardClick}
+                displayedCards={displayedCards}
+                schedule={schedule}
+                handleDeleteFavorite={handleDeleteFavorite}
+                recipesList={recipes}
+              />
+            )
           }
         />
         <Route
@@ -131,9 +170,9 @@ function App() {
               favoriteRecipes={favoriteRecipes}
               setSelectedCard={setSelectedCard}
               onCardClick={handleCardClick}
-              handleDeleteCard={handleDeleteCard}
+              handleDeleteFavorite={handleDeleteFavorite}
               schedule={schedule}
-              recipesList={displayedCards}
+              recipesList={recipes}
             />
           }
         />
@@ -164,6 +203,7 @@ function App() {
         onClose={closePopup}
         onAddFavorite={handleAddFavorite}
         selectedCard={selectedCard}
+        favoriteRecipes={favoriteRecipes}
       />
     </div>
   );

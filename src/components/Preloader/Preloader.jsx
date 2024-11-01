@@ -1,11 +1,11 @@
-import "./__.css";
+import "./Preloader.css";
 
-function __() {
+function Preloader() {
   return (
-    <>
-      <h1>New component</h1>
-    </>
+    <div className="preloader">
+      <div className="circle-preloader"></div>
+    </div>
   );
 }
 
-export default __;
+export default Preloader;

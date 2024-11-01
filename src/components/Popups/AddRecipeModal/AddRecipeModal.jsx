@@ -121,7 +121,7 @@ function AddRecipeModal({ isOpen, onClose, handleSubmitRecipe }) {
         {ingredients.length > 0
           ? ingredients.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} className="modal__ingredient-item">
                   {measures[index]} {item}
                 </li>
               );
@@ -147,7 +147,11 @@ function AddRecipeModal({ isOpen, onClose, handleSubmitRecipe }) {
       <ul className="modal__step-list">
         {steps.length > 0
           ? steps.map((item, index) => {
-              return <li key={index}>{item}</li>;
+              return (
+                <li key={index} className="modal__step-item">
+                  {item}
+                </li>
+              );
             })
           : " "}
       </ul>

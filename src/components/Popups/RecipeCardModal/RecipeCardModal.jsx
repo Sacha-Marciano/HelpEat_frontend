@@ -1,15 +1,29 @@
 import "./RecipeCardModal.css";
 
-function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
+function RecipeCardModal({
+  isOpen,
+  onClose,
+  onAddFavorite,
+  selectedCard,
+  favoriteRecipes,
+}) {
   const handleAddFavorite = () => {
     onAddFavorite({
       _id: selectedCard._id,
       name: selectedCard.name,
       image: selectedCard.image,
       ingredients: selectedCard.ingredients,
+      measures: selectedCard.measures,
       steps: selectedCard.steps,
     });
   };
+
+  const isFavorite =
+    favoriteRecipes.filter((item) => item._id == selectedCard._id).length > 0;
+
+  const buttonSubmitClassName = `modal__button-favorite ${
+    isFavorite ? "modal__button-favorite_disabled" : ""
+  }`;
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
@@ -32,7 +46,7 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
             <ul className="modal__recipe-ingredients">
               {selectedCard.ingredients.map((item, index) => {
                 return (
-                  <li key={index}>
+                  <li key={index} className="modal__recipe-ingredient">
                     {selectedCard.measures[index]} {item}
                   </li>
                 );
@@ -41,16 +55,21 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
             <p className="modal__recipe-subtitle">Steps :</p>
             <ul className="modal__recipe-steps">
               {selectedCard.steps.map((item, index) => {
-                return <li key={index}>{item}</li>;
+                return (
+                  <li key={index} className="modal__recipe-step">
+                    {item}
+                  </li>
+                );
               })}
             </ul>
           </div>
           <button
-            className="modal__button-favorite"
+            className={buttonSubmitClassName}
             type="button"
             onClick={handleAddFavorite}
+            disabled={isFavorite}
           >
-            Add to favorites
+            {isFavorite ? "Favorite recipe !" : "Add to favorite"}
           </button>
         </div>
       </div>

@@ -11,8 +11,6 @@
 
 .modal__image {
   width: 50%;
-  height: 100%;
-
   border-radius: 10px 0 0 10px;
 }
 
@@ -81,4 +79,8 @@
   border-radius: 4px;
 
   font-size: 24px;
+}
+
+.modal__button-favorite_disabled {
+  opacity: 0.5;
 }

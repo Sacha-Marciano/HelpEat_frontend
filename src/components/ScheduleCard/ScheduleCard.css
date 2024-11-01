@@ -25,6 +25,8 @@
 
   border: solid 1px #572618;
   border-radius: 15px 15px 0 0;
+
+  cursor: pointer;
 }
 
 .schedule-card__container {

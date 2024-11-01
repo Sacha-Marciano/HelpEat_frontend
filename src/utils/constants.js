@@ -3,19 +3,19 @@ export const scheduleConst = [
     _id: 1,
     day: "Monday",
     dayIndex: 0,
-    recipesOfDay: { breakfast: 1, lunch: 2, dinner: 0 },
+    recipesOfDay: { breakfast: 0, lunch: 0, dinner: 0 },
   },
   {
     _id: 2,
     day: "Tuesday",
     dayIndex: 1,
-    recipesOfDay: { breakfast: 1, lunch: 0, dinner: 0 },
+    recipesOfDay: { breakfast: 0, lunch: 0, dinner: 0 },
   },
   {
     _id: 3,
     day: "Wednesday",
     dayIndex: 2,
-    recipesOfDay: { breakfast: 0, lunch: 3, dinner: 0 },
+    recipesOfDay: { breakfast: 0, lunch: 0, dinner: 0 },
   },
   {
     _id: 4,
@@ -43,7 +43,7 @@ export const scheduleConst = [
   },
 ];
 
-export const recipes = [
+export const recipesConst = [
   {
     _id: 1,
     name: "Crepes",
@@ -53,6 +53,7 @@ export const recipes = [
     ingredients: ["this", "that", "another this"],
     measures: ["1g", "1ml", "1tbs"],
     steps: ["do this", "do that", "do this then do that"],
+    isFavorite: false,
   },
   {
     _id: 2,
@@ -63,6 +64,7 @@ export const recipes = [
     ingredients: ["this", "that", "another this"],
     measures: ["1g", "1ml", "1tbs"],
     steps: ["do this", "do that", "do this then do that"],
+    isFavorite: false,
   },
   {
     _id: 3,
@@ -73,6 +75,7 @@ export const recipes = [
     ingredients: ["this", "that", "another this"],
     measures: ["1g", "1ml", "1kg"],
     steps: ["do this", "do that", "do this then do that"],
+    isFavorite: false,
   },
   {
     _id: 4,
@@ -83,5 +86,6 @@ export const recipes = [
     ingredients: ["this", "that", "another this"],
     measures: ["Pinch", "4 large", "1tbs"],
     steps: ["do this", "do that", "do this then do that"],
+    isFavorite: false,
   },
 ];
