@@ -1,33 +1,21 @@
 import "./RecipeCardModal.css";
 
-function RecipeCardModal({
-  isOpen,
-  onClose,
-  onAddFavorite,
-  selectedCard,
-  favoriteRecipes,
-}) {
+function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
   const handleAddFavorite = () => {
-    onAddFavorite({
-      _id: selectedCard._id,
-      name: selectedCard.name,
-      image: selectedCard.image,
-      ingredients: selectedCard.ingredients,
-      measures: selectedCard.measures,
-      steps: selectedCard.steps,
-    });
+    onAddFavorite(selectedCard);
   };
 
-  const isFavorite =
-    favoriteRecipes.filter((item) => item._id == selectedCard._id).length > 0;
-
   const buttonSubmitClassName = `modal__button-favorite ${
-    isFavorite ? "modal__button-favorite_disabled" : ""
+    selectedCard.isFavorite ? "modal__button-favorite_disabled" : ""
   }`;
 
   return (
-    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
-      <div className="modal__container">
+    <div
+      className={`modal__recipe-card ${
+        isOpen ? "modal__recipe-card_opened" : ""
+      }`}
+    >
+      <div className="modal__container_type_card">
         <button
           className="modal__button_type_close"
           type="button"
@@ -44,32 +32,36 @@ function RecipeCardModal({
             <p className="modal__recipe-subtitle">Ingredients :</p>
 
             <ul className="modal__recipe-ingredients">
-              {selectedCard.ingredients.map((item, index) => {
-                return (
-                  <li key={index} className="modal__recipe-ingredient">
-                    {selectedCard.measures[index]} {item}
-                  </li>
-                );
-              })}
+              {selectedCard.ingredients
+                ? selectedCard.ingredients.map((item, index) => {
+                    return (
+                      <li key={index} className="modal__recipe-ingredient">
+                        {selectedCard.measures[index]} {item}
+                      </li>
+                    );
+                  })
+                : ""}
             </ul>
             <p className="modal__recipe-subtitle">Steps :</p>
             <ul className="modal__recipe-steps">
-              {selectedCard.steps.map((item, index) => {
-                return (
-                  <li key={index} className="modal__recipe-step">
-                    {item}
-                  </li>
-                );
-              })}
+              {selectedCard.instructions
+                ? selectedCard.instructions.map((item, index) => {
+                    return (
+                      <li key={index} className="modal__recipe-step">
+                        {item}
+                      </li>
+                    );
+                  })
+                : ""}
             </ul>
           </div>
           <button
             className={buttonSubmitClassName}
             type="button"
             onClick={handleAddFavorite}
-            disabled={isFavorite}
+            disabled={selectedCard.isFavorite}
           >
-            {isFavorite ? "Favorite recipe !" : "Add to favorite"}
+            {selectedCard.isFavorite ? "Favorite recipe !" : "Add to favorite"}
           </button>
         </div>
       </div>

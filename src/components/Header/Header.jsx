@@ -2,22 +2,19 @@ import { Link } from "react-router-dom";
 
 import "./Header.css";
 
-import searchIcon from "../../assets/SearchIcon.svg";
 import helpEatLogo from "../../assets/HelpEatLogo.svg";
 import avatar from "../../assets/Temp_Avatar.png";
+import navigationIcon from "../../assets/NavigationIcon.svg";
 
-function Header({ onSearchClick, onAddClick }) {
+function Header({ onNavClick }) {
   return (
     <header className="header">
       <img
-        className="header__search-icon"
-        src={searchIcon}
-        alt="Search icon"
-        onClick={onSearchClick}
+        className="header__navigation-icon"
+        src={navigationIcon}
+        alt="Navigation icon"
+        onClick={onNavClick}
       />
-      <button className="header__add-button" onClick={onAddClick}>
-        + Add a recipe
-      </button>
       <Link to="/" className="header__link-main">
         <img className="header__logo" src={helpEatLogo} alt="HelpEat logo" />
       </Link>

@@ -4,7 +4,7 @@ import "./AddRecipeModal.css";
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function AddRecipeModal({ isOpen, onClose, handleSubmitRecipe }) {
+function AddRecipeModal({ isOpen, onClose, onSubmitRecipe }) {
   const [measures, setMeasures] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
@@ -47,13 +47,14 @@ function AddRecipeModal({ isOpen, onClose, handleSubmitRecipe }) {
 
   const _handleSubmit = (evt) => {
     evt.preventDefault();
-    handleSubmitRecipe({
+    onSubmitRecipe({
       _id: `${Math.random()}`,
       name: data.recipeName,
       image: data.recipeImage,
       ingredients: ingredients,
       measures: measures,
-      steps: steps,
+      instructions: steps,
+      isFavorite: true,
     });
   };
 

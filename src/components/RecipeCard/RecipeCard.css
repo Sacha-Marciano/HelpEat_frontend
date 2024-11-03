@@ -30,6 +30,10 @@
   padding: 5px;
   margin: 0 0 20px;
 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
   background-color: #dac9b0;
   color: #572618;
 
@@ -51,6 +55,7 @@
   background-color: #dac9b0;
   color: #572618;
   border-radius: 15px;
+
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

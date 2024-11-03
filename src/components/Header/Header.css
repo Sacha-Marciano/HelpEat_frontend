@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.header__search-icon {
+.header__navigation-icon {
   height: 60px;
   width: 60px;
   margin: 0 20px 0 0;
@@ -12,25 +12,7 @@
   transition: opacity linear 0.2s;
 }
 
-.header__search-icon:hover {
-  opacity: 0.4;
-}
-
-.header__add-button {
-  background-color: transparent;
-  border: 0;
-  padding: 0;
-
-  font-family: "Cabinet Grotesk", Arial, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-
-  margin: 0;
-
-  transition: opacity linear 0.2s;
-}
-
-.header__add-button:hover {
+.header__navigation-icon:hover {
   opacity: 0.4;
 }
 

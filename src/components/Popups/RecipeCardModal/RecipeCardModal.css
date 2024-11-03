@@ -1,4 +1,28 @@
-.modal__container {
+.modal__recipe-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cabinet Grotesk", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.modal__recipe-card_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__container_type_card {
   display: flex;
   width: 1200px;
   height: 600px;
@@ -7,6 +31,18 @@
   border-radius: 10px;
 
   position: relative;
+}
+
+.modal__button_type_close {
+  width: 16px;
+  height: 16px;
+  background-image: url(../../../assets/CloseButton.png);
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 
 .modal__image {

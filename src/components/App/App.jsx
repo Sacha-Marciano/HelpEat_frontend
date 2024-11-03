@@ -5,87 +5,92 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // Import styles
 import "./App.css";
 
-// Import components
+// Import API methods
+import { getRecipes } from "../../utils/freeMealApi";
+
+//Import components
 import Header from "../Header/Header";
+import Preloader from "../Preloader/Preloader";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
-import Preloader from "../Preloader/Preloader";
 import NotFound from "../NotFound/NotFound";
 
 // Import popups
-import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
-import AddScheduleModal from "../Popups/AddScheduleModal/AddScheduleModal";
+import Navigation from "../Navigation/Navigation";
 import RecipeCardModal from "../Popups/RecipeCardModal/RecipeCardModal";
 import SearchModal from "../Popups/SearchModal/SearchModal";
-import LoginModal from "../Popups/LoginModal/LoginModal";
-import RegisterModal from "../Popups/RegisterModal/RegisterModal";
+import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
+
+// Import contexts
+import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
 
 // Import constants
-import { recipesConst, scheduleConst } from "../../utils/constants";
+import { scheduleConst } from "../../utils/constants";
 
 function App() {
-  //Hooks
+  // Hooks
+  const [recipesList, setRecipesList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
+  const [selectedPopup, setSelectedPopup] = useState("");
+  const [selectedRecipeCard, setSelectedRecipeCard] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [openedPopup, setOpenPopup] = useState("");
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-  const [selectedCard, setSelectedCard] = useState({
-    name: "",
-    image: "",
-    ingredients: [],
-    steps: [],
-  });
-  const [recipes, setRecipes] = useState(recipesConst);
-  const [displayedCards, setDisplayedCards] = useState(recipes);
-  const [validationError, setValidationError] = useState(false);
+  const [displayedCards, setDisplayedCards] = useState([]);
   const [schedule, setSchedule] = useState(scheduleConst);
-  const [selectedScheduleCard, setSelectedScheduleCard] = useState("");
+  const [validationError, setValidationError] = useState(false);
 
-  // Up-lifted functions
-  // Open popups
-  const handleAddClick = () => {
-    setOpenPopup("popup-add-recipe");
+  // Open and close popups
+  const handleNavClick = () => {
+    setSelectedPopup("navigation-popup");
   };
   const handleSearchClick = () => {
-    setOpenPopup("popup-search");
+    setSelectedPopup("search-popup");
   };
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-    setOpenPopup("popup-card-recipe");
+  const handleAddRecipeClick = () => {
+    setSelectedPopup("add-recipe-popup");
   };
-  const handleScheduleClick = (evt) => {
-    setSelectedScheduleCard(
-      schedule.filter((item) => item.day === evt.target.textContent)[0]
-    );
-    setOpenPopup("popup-schedule");
+  const handleScheduleClick = () => {
+    setSelectedPopup("schedule-popup");
   };
-
-  // Close popups
+  const handleRecipeCardClick = (card) => {
+    setSelectedRecipeCard(card);
+    setSelectedPopup("recipe-card-popup");
+  };
   const closePopup = () => {
-    setOpenPopup("");
+    setSelectedPopup("");
   };
 
-  // Add recipe to favorites array
-  const handleAddFavorite = (recipe) => {
-    if (!favoriteRecipes.some((item) => item._id === recipe._id)) {
-      setFavoriteRecipes([recipe, ...favoriteRecipes]);
-    } else {
-      console.log("Recipe is already favorite !");
+  // Set 3 more recipes from recipes list to display
+  const handleShowMore = () => {
+    const newDisplayCard = [];
+    for (let i = 0; i < 3; i++) {
+      if (recipesList[displayedCards.length + i]) {
+        newDisplayCard.push(recipesList[displayedCards.length + i]);
+      }
     }
+    setDisplayedCards([...displayedCards, ...newDisplayCard]);
+  };
+
+  // Add selected card to favorite array
+  const handleAddFavorite = (recipe) => {
+    recipesList.find((item) => item._id === recipe._id).isFavorite = true;
+    setFavoriteList([recipe, ...favoriteList]);
     closePopup();
   };
 
-  // Delete selected recipe from schedule
-  const handleDeleteFavorite = (card) => {
-    console.log(card);
-    const temp = favoriteRecipes.filter((item) => item._id !== card._id);
-    setFavoriteRecipes(temp);
+  // Remove selected card from favorite array
+  const handleDeleteFavorite = (recipe) => {
+    const tempFavorites = favoriteList.filter(
+      (item) => item._id !== recipe._id
+    );
+    setFavoriteList(tempFavorites);
+    recipesList.find((item) => item._id === recipe._id).isFavorite = false;
   };
 
-  // Set diplayed card depending on search
+  // Set displayed card according to search query
   const handleSearch = (search) => {
-    const searchResult = recipes.filter((item) =>
+    const searchResult = recipesList.filter((item) =>
       item.name
         .toLowerCase()
         .includes(search.recipeSearch.toLowerCase().split(" ")[0])
@@ -99,36 +104,45 @@ function App() {
     }
   };
 
-  // Add submitted recipe to schedule
-  const handleScheduleSubmit = (data) => {
-    const temp = schedule;
-    temp[data.day].recipesOfDay[data.time] = data.recipeId;
-    setSchedule(temp);
-    closePopup();
+  // Set a new recipe to recipes list array
+  const handleSubmitRecipe = (item) => {
+    setRecipesList([item, ...recipesList]);
   };
 
-  // Handle new recipe submit and adds it to displayed card
-  const handleSubmitRecipe = (card) => {
-    setRecipes([card, ...recipes]);
-    setFavoriteRecipes([card, ...favoriteRecipes]);
-    closePopup();
-  };
-
-  // Every time the recipes array is modified, displayed card are rerendered
+  // On page load/refresh
   useEffect(() => {
-    setDisplayedCards(recipes);
-  }, [recipes]);
+    setIsLoading(true);
+    getRecipes(3)
+      .then((recipes) => {
+        setRecipesList(recipes);
+        setDisplayedCards([recipes[0], recipes[1], recipes[2]]);
+      })
+
+      .catch((err) => console.error(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  // Rerender displayed cards when recipes list is changed
+  useEffect(() => {
+    setDisplayedCards([recipesList[0], recipesList[1], recipesList[2]]);
+  }, [recipesList]);
 
   //Add event listener when mounting popup
   useEffect(() => {
-    if (!openedPopup) return;
+    if (!selectedPopup) return;
     const handleEscClose = (evt) => {
       if (evt.key === "Escape") {
         closePopup();
       }
     };
     const handleClickClose = (evt) => {
-      if (evt.target.classList[0] === "modal") {
+      if (
+        evt.target.classList[0] === "modal" ||
+        evt.target.classList[0] === "navigation" ||
+        evt.target.classList[0] === "modal__recipe-card"
+      ) {
         closePopup();
       }
     };
@@ -139,73 +153,68 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
       document.removeEventListener("click", handleClickClose);
     };
-  }, [openedPopup]);
+  }, [selectedPopup]);
 
   return (
-    <div className="page">
-      <Header onSearchClick={handleSearchClick} onAddClick={handleAddClick} />
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route
-          path="/"
-          element={
-            isLoading ? (
-              <Preloader />
-            ) : (
-              <Main
-                onScheduleClick={handleScheduleClick}
-                onCardClick={handleCardClick}
-                displayedCards={displayedCards}
-                schedule={schedule}
-                handleDeleteFavorite={handleDeleteFavorite}
-                recipesList={recipes}
+    <CurrentRecipesContext.Provider value={recipesList}>
+      <div className="page">
+        <Header onNavClick={handleNavClick} />
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/"
+            element={
+              isLoading ? (
+                <Preloader />
+              ) : (
+                <Main
+                  onRecipeCardClick={handleRecipeCardClick}
+                  onShowMoreClick={handleShowMore}
+                  onScheduleClick={handleScheduleClick}
+                  displayedCards={displayedCards}
+                  schedule={schedule}
+                />
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                favoriteList={favoriteList}
+                onRecipeCardClick={handleRecipeCardClick}
+                onDeleteFavorite={handleDeleteFavorite}
               />
-            )
-          }
+            }
+          />
+        </Routes>
+        <About />
+        <Footer />
+        <Navigation
+          isOpen={selectedPopup === "navigation-popup"}
+          onClickSearch={handleSearchClick}
+          onClickAddRecipe={handleAddRecipeClick}
+          onClickScheduleRecipe={handleScheduleClick}
         />
-        <Route
-          path="/profile"
-          element={
-            <Profile
-              favoriteRecipes={favoriteRecipes}
-              setSelectedCard={setSelectedCard}
-              onCardClick={handleCardClick}
-              handleDeleteFavorite={handleDeleteFavorite}
-              schedule={schedule}
-              recipesList={recipes}
-            />
-          }
+        <RecipeCardModal
+          isOpen={selectedPopup === "recipe-card-popup"}
+          onClose={closePopup}
+          onAddFavorite={handleAddFavorite}
+          selectedCard={selectedRecipeCard}
         />
-      </Routes>
-      <About />
-      <Footer />
-      <SearchModal
-        isOpen={openedPopup === "popup-search"}
-        onClose={closePopup}
-        onSearch={handleSearch}
-        validationError={validationError}
-      />
-      <AddRecipeModal
-        isOpen={openedPopup === "popup-add-recipe"}
-        onClose={closePopup}
-        handleSubmitRecipe={handleSubmitRecipe}
-      />
-      <AddScheduleModal
-        isOpen={openedPopup === "popup-schedule"}
-        onClose={closePopup}
-        onSubmit={handleScheduleSubmit}
-        favoriteRecipes={favoriteRecipes}
-        schedule={schedule}
-        selectedScheduleCard={selectedScheduleCard}
-      />
-      <RecipeCardModal
-        isOpen={openedPopup === "popup-card-recipe"}
-        onClose={closePopup}
-        onAddFavorite={handleAddFavorite}
-        selectedCard={selectedCard}
-        favoriteRecipes={favoriteRecipes}
-      />
-    </div>
+        <SearchModal
+          isOpen={selectedPopup === "search-popup"}
+          onClose={closePopup}
+          onSearch={handleSearch}
+          validationError={validationError}
+        />
+        <AddRecipeModal
+          isOpen={selectedPopup === "add-recipe-popup"}
+          onClose={closePopup}
+          onSubmitRecipe={handleSubmitRecipe}
+        />
+      </div>
+    </CurrentRecipesContext.Provider>
   );
 }
 

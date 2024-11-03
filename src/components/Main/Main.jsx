@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+// Import methods from librairies
+import { useContext } from "react";
 
 // Import styles
 import "./Main.css";
@@ -7,43 +8,55 @@ import "./Main.css";
 import ScheduleCard from "../ScheduleCard/ScheduleCard";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
+//Import context
+import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
+
 function Main({
+  onRecipeCardClick,
+  onShowMoreClick,
   onScheduleClick,
-  onCardClick,
   displayedCards,
   schedule,
-  handleDeleteFavorite,
-  recipesList,
 }) {
+  const recipesList = useContext(CurrentRecipesContext);
   return (
     <main className="main">
       <div className="main__schedule">
         {schedule.map((item) => {
           return (
             <ScheduleCard
-              key={item._id}
-              day={item.day}
-              recipesOfDay={item.recipesOfDay}
+              key={item.dayIndex}
+              day={item.name}
+              recipesOfDay={item.scheduledRecipes}
               onScheduleClick={onScheduleClick}
-              onCardClick={onCardClick}
-              recipesList={recipesList}
-              handleDeleteFavorite={handleDeleteFavorite}
+              onCardClick={onRecipeCardClick}
             />
           );
         })}
       </div>
       <div className="main__recipe-container">
-        {displayedCards.map((item) => {
+        {displayedCards.map((recipe) => {
           return (
             <RecipeCard
-              key={item._id}
+              key={recipe._id}
               isWholeCard={true}
-              card={item}
-              onClick={onCardClick}
-              handleDeleteFavorite={handleDeleteFavorite}
+              isInProfile={false}
+              recipe={recipe}
+              onClick={onRecipeCardClick}
             />
           );
         })}
+        {displayedCards.length < recipesList.length ? (
+          <button
+            className="main__show-more-button"
+            type="button"
+            onClick={onShowMoreClick}
+          >
+            Show more
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </main>
   );

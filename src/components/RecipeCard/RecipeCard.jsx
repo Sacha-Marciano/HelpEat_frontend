@@ -3,26 +3,26 @@ import "./RecipeCard.css";
 function RecipeCard({
   isWholeCard,
   isInProfile,
-  card,
+  recipe,
   onClick,
-  handleDeleteFavorite,
+  onDeleteFavorite,
 }) {
   const backgroundImage = {
-    backgroundImage: `url(${card.image})`,
+    backgroundImage: `url(${recipe.image})`,
   };
 
   const handleClick = () => {
-    onClick(card);
+    onClick(recipe);
   };
 
   const handleDeleteCard = (evt) => {
     evt.stopPropagation();
-    handleDeleteFavorite(card);
+    onDeleteFavorite(recipe);
   };
 
   return isWholeCard ? (
     <div className="recipe-card" style={backgroundImage} onClick={handleClick}>
-      <h2 className="recipe-card__title">{card.name}</h2>
+      <h2 className="recipe-card__title">{recipe.name}</h2>
       {isInProfile ? (
         <button
           className="recipe-card__delete-favorite"
