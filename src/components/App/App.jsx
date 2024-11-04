@@ -22,6 +22,7 @@ import Navigation from "../Navigation/Navigation";
 import RecipeCardModal from "../Popups/RecipeCardModal/RecipeCardModal";
 import SearchModal from "../Popups/SearchModal/SearchModal";
 import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
+import AddScheduleModal from "../Popups/AddScheduleModal/AddScheduleModal";
 
 // Import contexts
 import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
@@ -35,6 +36,7 @@ function App() {
   const [favoriteList, setFavoriteList] = useState([]);
   const [selectedPopup, setSelectedPopup] = useState("");
   const [selectedRecipeCard, setSelectedRecipeCard] = useState({});
+  const [selectedScheduleCard, setSelectedScheduleCard] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [displayedCards, setDisplayedCards] = useState([]);
   const [schedule, setSchedule] = useState(scheduleConst);
@@ -50,7 +52,14 @@ function App() {
   const handleAddRecipeClick = () => {
     setSelectedPopup("add-recipe-popup");
   };
-  const handleScheduleClick = () => {
+  const handleScheduleClick = (evt) => {
+    setSelectedScheduleCard(
+      schedule.find((item) => item.name === evt.target.textContent)
+    );
+    setSelectedPopup("schedule-popup");
+  };
+  const handleAddScheduleClick = () => {
+    setSelectedScheduleCard(schedule.find((item) => item.name === "Monday"));
     setSelectedPopup("schedule-popup");
   };
   const handleRecipeCardClick = (card) => {
@@ -76,16 +85,15 @@ function App() {
   const handleAddFavorite = (recipe) => {
     recipesList.find((item) => item._id === recipe._id).isFavorite = true;
     setFavoriteList([recipe, ...favoriteList]);
-    closePopup();
   };
 
   // Remove selected card from favorite array
   const handleDeleteFavorite = (recipe) => {
+    recipesList.find((item) => item._id === recipe._id).isFavorite = false;
     const tempFavorites = favoriteList.filter(
       (item) => item._id !== recipe._id
     );
     setFavoriteList(tempFavorites);
-    recipesList.find((item) => item._id === recipe._id).isFavorite = false;
   };
 
   // Set displayed card according to search query
@@ -107,12 +115,28 @@ function App() {
   // Set a new recipe to recipes list array
   const handleSubmitRecipe = (item) => {
     setRecipesList([item, ...recipesList]);
+    closePopup();
+  };
+
+  // Set a recipe ID in the schedule for asked time
+  const handleSubmitSchedule = (data) => {
+    const tempSchedule = [...schedule];
+    tempSchedule[data.dayIndex].scheduledRecipes[data.time] = data.recipeId;
+    setSchedule(tempSchedule);
+    closePopup();
+  };
+
+  // Remove recipe ID from shedule
+  const handleDeleteSchedule = (data) => {
+    const tempSchedule = [...schedule];
+    tempSchedule[data.dayIndex].scheduledRecipes[data.time] = "";
+    setSchedule(tempSchedule);
   };
 
   // On page load/refresh
   useEffect(() => {
     setIsLoading(true);
-    getRecipes(3)
+    getRecipes(15)
       .then((recipes) => {
         setRecipesList(recipes);
         setDisplayedCards([recipes[0], recipes[1], recipes[2]]);
@@ -173,6 +197,7 @@ function App() {
                   onScheduleClick={handleScheduleClick}
                   displayedCards={displayedCards}
                   schedule={schedule}
+                  onDeleteClick={handleDeleteSchedule}
                 />
               )
             }
@@ -182,6 +207,7 @@ function App() {
             element={
               <Profile
                 favoriteList={favoriteList}
+                schedule={schedule}
                 onRecipeCardClick={handleRecipeCardClick}
                 onDeleteFavorite={handleDeleteFavorite}
               />
@@ -194,7 +220,7 @@ function App() {
           isOpen={selectedPopup === "navigation-popup"}
           onClickSearch={handleSearchClick}
           onClickAddRecipe={handleAddRecipeClick}
-          onClickScheduleRecipe={handleScheduleClick}
+          onClickScheduleRecipe={handleAddScheduleClick}
         />
         <RecipeCardModal
           isOpen={selectedPopup === "recipe-card-popup"}
@@ -212,6 +238,14 @@ function App() {
           isOpen={selectedPopup === "add-recipe-popup"}
           onClose={closePopup}
           onSubmitRecipe={handleSubmitRecipe}
+        />
+        <AddScheduleModal
+          isOpen={selectedPopup === "schedule-popup"}
+          onClose={closePopup}
+          onSubmit={handleSubmitSchedule}
+          favoriteList={favoriteList}
+          schedule={schedule}
+          selectedScheduleCard={selectedScheduleCard}
         />
       </div>
     </CurrentRecipesContext.Provider>

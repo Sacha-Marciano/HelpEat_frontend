@@ -1,6 +1,5 @@
 .schedule-card {
-  width: 175px;
-  height: 250px;
+  width: 100%;
 
   background-color: #703424;
 
@@ -9,14 +8,21 @@
   transition: transform linear 0.2s;
 }
 
+.schedule-card:last-of-type {
+  grid-column: 2;
+  grid-row: 3;
+}
+
 .schedule-card:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .schedule-card__title {
-  height: 40px;
+  width: 100%;
 
   margin: 0;
+  padding: 0 5px;
+  box-sizing: border-box;
 
   background-color: #dac9b0;
   color: #572618;
@@ -27,9 +33,14 @@
   border-radius: 15px 15px 0 0;
 
   cursor: pointer;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .schedule-card__container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,4 +61,34 @@
 
 .schedule-card__recipe:nth-of-type(3) {
   border: 0;
+}
+
+.schedule-card__delete-button {
+  width: 40px;
+  height: 40px;
+  background-image: url(../../assets/CloseButtonWhite.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+
+  border: none;
+}
+
+@media screen and (max-height: 600px) {
+  .schedule-card__recipe {
+    height: 40px;
+  }
+  .schedule-card__title {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .schedule-card {
+    min-width: 280px;
+  }
+  .schedule-card:hover {
+    transform: scale(1);
+  }
 }

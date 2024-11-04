@@ -7,8 +7,8 @@
 }
 
 .profile__section {
-  width: 650px;
-  height: 550px;
+  width: 100%;
+  height: calc(100vh - 150px);
 
   background-color: #703424;
   border-radius: 10px;
@@ -16,8 +16,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 0 0 0 0.4em;
 }
 
 .profile__title {
@@ -26,8 +24,14 @@
 }
 
 .profile__favorites {
+  width: calc(100% - 0.4em);
   list-style: none;
   overflow-y: scroll;
+  padding: 0 0 0 calc(0.4em + 20px);
+
+  display: grid;
+  grid-template-columns: repeat(2, calc(100% / 2 - 20px));
+  gap: 0 20px;
 }
 
 .profile__favorites::-webkit-scrollbar {
@@ -39,7 +43,7 @@
 }
 
 .profile__favorites::-webkit-scrollbar-thumb {
-  background-color: #572618;
+  background-color: #fff;
   border-radius: 10px;
 }
 
@@ -70,4 +74,18 @@
 .profile__grocery-list::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 1023px) {
+  .profile__favorites {
+    display: block;
+    padding: 0 0 0 0.4em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+  }
 }

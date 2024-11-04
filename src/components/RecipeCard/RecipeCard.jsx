@@ -38,7 +38,7 @@ function RecipeCard({
   ) : (
     <div className="recipe-card_type_name-only">
       <h2 className="recipe-card__title-only" onClick={handleClick}>
-        {card.name}
+        {recipe.name}
       </h2>
     </div>
   );

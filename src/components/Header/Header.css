@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  background-color: #dac9b0;
 }
 
 .header__navigation-icon {
@@ -50,4 +51,38 @@
 .header__avatar {
   height: 60px;
   width: 60px;
+}
+
+@media screen and (max-width: 767px) {
+  .header__navigation-icon {
+    height: 30px;
+    width: 30px;
+  }
+
+  .header__logo {
+    width: 200px;
+  }
+
+  .header__avatar {
+    height: 30px;
+    width: 30px;
+  }
+
+  .header__username {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    padding: 10px 20px;
+  }
+
+  .header__link-profile {
+    visibility: hidden;
+  }
 }

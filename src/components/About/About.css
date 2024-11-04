@@ -23,3 +23,16 @@
   text-align: center;
   line-height: 1.6;
 }
+
+@media screen and (max-width: 767px) {
+  .about__title {
+    font-size: 30px;
+  }
+  .about__subtitle {
+    font-size: 20px;
+  }
+  .about__paragraph {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+}

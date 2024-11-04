@@ -20,20 +20,19 @@ function Navigation({
           src={helpEatLogo}
           alt="HelpEat logo"
         />
-        <Link to="/profile" className="navigation__link-profile">
+        <Link to="/profile" className="navigation__link">
           <span className="navigation__username"> User Name</span>
           <img className="navigation__avatar" src={avatar} alt="User avatar" />
         </Link>
+        <Link to="/profile" className="navigation__link-profile">
+          <span className="navigation__button"> Profile</span>
+        </Link>
+
         <button
           className="navigation__button"
           type="button"
           onClick={onClickSearch}
         >
-          <img
-            className="navigation__search-icon"
-            src={searchIcon}
-            alt="Search icon"
-          />
           Search a recipe
         </button>
         <button
@@ -41,14 +40,14 @@ function Navigation({
           type="button"
           onClick={onClickAddRecipe}
         >
-          + Add a recipe
+          Add a recipe
         </button>
         <button
           className="navigation__button"
           type="button"
           onClick={onClickScheduleRecipe}
         >
-          + Schedule a recipe
+          Schedule a recipe
         </button>
       </nav>
     </div>

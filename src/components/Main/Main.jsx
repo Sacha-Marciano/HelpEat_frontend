@@ -17,6 +17,7 @@ function Main({
   onScheduleClick,
   displayedCards,
   schedule,
+  onDeleteClick,
 }) {
   const recipesList = useContext(CurrentRecipesContext);
   return (
@@ -27,9 +28,11 @@ function Main({
             <ScheduleCard
               key={item.dayIndex}
               day={item.name}
+              dayIndex={item.dayIndex}
               recipesOfDay={item.scheduledRecipes}
               onScheduleClick={onScheduleClick}
               onCardClick={onRecipeCardClick}
+              onDeleteClick={onDeleteClick}
             />
           );
         })}
