@@ -15,9 +15,11 @@ function Main({
   onRecipeCardClick,
   onShowMoreClick,
   onScheduleClick,
+  onDeleteClick,
+  onResetSearch,
   displayedCards,
   schedule,
-  onDeleteClick,
+  isShowMore,
 }) {
   const recipesList = useContext(CurrentRecipesContext);
   return (
@@ -37,6 +39,8 @@ function Main({
           );
         })}
       </div>
+      <h2 className="main__container-title">WorldWide Recipes </h2>
+
       <div className="main__recipe-container">
         {displayedCards.map((recipe) => {
           return (
@@ -49,16 +53,26 @@ function Main({
             />
           );
         })}
-        {displayedCards.length < recipesList.length ? (
-          <button
-            className="main__show-more-button"
-            type="button"
-            onClick={onShowMoreClick}
-          >
-            Show more
-          </button>
+        {isShowMore ? (
+          displayedCards.length < recipesList.length ? (
+            <button
+              className="main__button main__show-more-button"
+              type="button"
+              onClick={onShowMoreClick}
+            >
+              Show more
+            </button>
+          ) : (
+            ""
+          )
         ) : (
-          ""
+          <button
+            className="main__button main__show-all-button"
+            type="button"
+            onClick={onResetSearch}
+          >
+            Reset Search
+          </button>
         )}
       </div>
     </main>

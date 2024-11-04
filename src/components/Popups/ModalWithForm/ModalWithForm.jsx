@@ -21,7 +21,7 @@ function ModalWithForm({
       <div className="modal__content">
         <p className="modal__title">{title}</p>
         <button
-          className="modal__button_type_close"
+          className="modal__button-close"
           type="button"
           onClick={closePopup}
         />

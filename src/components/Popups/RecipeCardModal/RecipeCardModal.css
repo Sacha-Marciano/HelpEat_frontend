@@ -1,6 +1,6 @@
 .modal__recipe-card {
   max-width: 1600px;
-  padding: 40px 45px;
+  padding: 40px 25px;
 
   position: fixed;
   top: 0;
@@ -26,7 +26,8 @@
 }
 
 .modal__container_type_card {
-  width: 80vw;
+  max-height: 80vh;
+  width: 90vw;
   max-width: 1400px;
 
   display: flex;
@@ -37,25 +38,13 @@
   position: relative;
 }
 
-.modal__button_type_close {
-  width: 16px;
-  height: 16px;
-  background-image: url(../../../assets/CloseButton.png);
-  background-size: contain;
-  background-color: transparent;
-  border: none;
-  position: absolute;
-  top: 10px;
-  right: 5px;
-}
-
 .modal__image {
   width: 50%;
   border-radius: 10px 0 0 10px;
 }
 
 .modal__recipe-info {
-  width: 50%;
+  max-width: 50%;
   height: 100%;
 
   display: flex;
@@ -63,6 +52,7 @@
   align-items: center;
 
   padding: 30px;
+  box-sizing: border-box;
 }
 
 .modal__recipe-title {
@@ -123,4 +113,33 @@
 
 .modal__button-favorite_disabled {
   opacity: 0.5;
+}
+
+@media screen and (max-width: 650px) {
+  .modal__container_type_card {
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
+  .modal__recipe_type_card::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  .modal__recipe_type_card::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+  }
+
+  .modal__image {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+  .modal__recipe-info {
+    max-width: 100%;
+  }
+  .modal__recipe {
+    overflow: visible;
+  }
+  .modal__button-favorite {
+    margin: 0 0 20px 0;
+  }
 }

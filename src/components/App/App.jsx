@@ -41,10 +41,13 @@ function App() {
   const [displayedCards, setDisplayedCards] = useState([]);
   const [schedule, setSchedule] = useState(scheduleConst);
   const [validationError, setValidationError] = useState(false);
+  const [isShowMore, setIsShowMore] = useState(true);
 
   // Open and close popups
   const handleNavClick = () => {
-    setSelectedPopup("navigation-popup");
+    selectedPopup === "navigation-popup"
+      ? closePopup()
+      : setSelectedPopup("navigation-popup");
   };
   const handleSearchClick = () => {
     setSelectedPopup("search-popup");
@@ -65,6 +68,7 @@ function App() {
   const handleRecipeCardClick = (card) => {
     setSelectedRecipeCard(card);
     setSelectedPopup("recipe-card-popup");
+    console.log(card.instructions);
   };
   const closePopup = () => {
     setSelectedPopup("");
@@ -79,6 +83,11 @@ function App() {
       }
     }
     setDisplayedCards([...displayedCards, ...newDisplayCard]);
+  };
+
+  const handleResetSearch = () => {
+    setDisplayedCards([recipesList[0], recipesList[1], recipesList[2]]);
+    setIsShowMore(true);
   };
 
   // Add selected card to favorite array
@@ -107,19 +116,21 @@ function App() {
       setDisplayedCards(searchResult);
       closePopup();
       setValidationError(false);
+      setIsShowMore(false);
     } else {
       setValidationError(true);
     }
   };
 
   // Set a new recipe to recipes list array
-  const handleSubmitRecipe = (item) => {
+  const handleRecipeSubmit = (item) => {
     setRecipesList([item, ...recipesList]);
+    setFavoriteList([item, ...favoriteList]);
     closePopup();
   };
 
   // Set a recipe ID in the schedule for asked time
-  const handleSubmitSchedule = (data) => {
+  const handleScheduleSubmit = (data) => {
     const tempSchedule = [...schedule];
     tempSchedule[data.dayIndex].scheduledRecipes[data.time] = data.recipeId;
     setSchedule(tempSchedule);
@@ -127,7 +138,7 @@ function App() {
   };
 
   // Remove recipe ID from shedule
-  const handleDeleteSchedule = (data) => {
+  const handleScheduleDelete = (data) => {
     const tempSchedule = [...schedule];
     tempSchedule[data.dayIndex].scheduledRecipes[data.time] = "";
     setSchedule(tempSchedule);
@@ -195,9 +206,11 @@ function App() {
                   onRecipeCardClick={handleRecipeCardClick}
                   onShowMoreClick={handleShowMore}
                   onScheduleClick={handleScheduleClick}
+                  onDeleteClick={handleScheduleDelete}
+                  onResetSearch={handleResetSearch}
                   displayedCards={displayedCards}
                   schedule={schedule}
-                  onDeleteClick={handleDeleteSchedule}
+                  isShowMore={isShowMore}
                 />
               )
             }
@@ -237,12 +250,12 @@ function App() {
         <AddRecipeModal
           isOpen={selectedPopup === "add-recipe-popup"}
           onClose={closePopup}
-          onSubmitRecipe={handleSubmitRecipe}
+          onSubmit={handleRecipeSubmit}
         />
         <AddScheduleModal
           isOpen={selectedPopup === "schedule-popup"}
           onClose={closePopup}
-          onSubmit={handleSubmitSchedule}
+          onSubmit={handleScheduleSubmit}
           favoriteList={favoriteList}
           schedule={schedule}
           selectedScheduleCard={selectedScheduleCard}

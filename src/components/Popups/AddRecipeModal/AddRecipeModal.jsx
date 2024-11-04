@@ -4,10 +4,11 @@ import "./AddRecipeModal.css";
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function AddRecipeModal({ isOpen, onClose, onSubmitRecipe }) {
+function AddRecipeModal({ isOpen, onClose, onSubmit }) {
   const [measures, setMeasures] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
+  const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
     recipeName: "",
@@ -23,6 +24,12 @@ function AddRecipeModal({ isOpen, onClose, onSubmitRecipe }) {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleImageUpload = (evt) => {
+    const file = evt.target.files[0];
+    const imageURL = URL.createObjectURL(file);
+    setImage(imageURL);
   };
 
   const handleAddIngredient = (evt) => {
@@ -47,10 +54,10 @@ function AddRecipeModal({ isOpen, onClose, onSubmitRecipe }) {
 
   const _handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmitRecipe({
+    onSubmit({
       _id: `${Math.random()}`,
       name: data.recipeName,
-      image: data.recipeImage,
+      image: image,
       ingredients: ingredients,
       measures: measures,
       instructions: steps,
@@ -81,15 +88,15 @@ function AddRecipeModal({ isOpen, onClose, onSubmitRecipe }) {
       </label>
       <label className="modal__label">
         Image*
+        <label htmlFor="file-upload-id" className="modal__label-upload">
+          Choose File
+        </label>
         <input
-          className="modal__input"
-          id="recipe-image-id"
-          placeholder="Image URL"
-          type="url"
-          required
-          name="recipeImage"
-          value={data.recipeImage}
-          onChange={handleChange}
+          className="modal__input modal__input-upload"
+          id="file-upload-id"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
         />
       </label>
       <label className="modal__label">

@@ -17,7 +17,7 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
     >
       <div className="modal__container_type_card">
         <button
-          className="modal__button_type_close"
+          className="modal__button-close"
           type="button"
           onClick={onClose}
         />
@@ -34,10 +34,12 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
             <ul className="modal__recipe-ingredients">
               {selectedCard.ingredients
                 ? selectedCard.ingredients.map((item, index) => {
-                    return (
+                    return item != "" ? (
                       <li key={index} className="modal__recipe-ingredient">
                         {selectedCard.measures[index]} {item}
                       </li>
+                    ) : (
+                      ""
                     );
                   })
                 : ""}
@@ -46,23 +48,27 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
             <ul className="modal__recipe-steps">
               {selectedCard.instructions
                 ? selectedCard.instructions.map((item, index) => {
-                    return (
+                    return item != "" ? (
                       <li key={index} className="modal__recipe-step">
                         {item}
                       </li>
+                    ) : (
+                      ""
                     );
                   })
                 : ""}
             </ul>
+            <button
+              className={buttonSubmitClassName}
+              type="button"
+              onClick={handleAddFavorite}
+              disabled={selectedCard.isFavorite}
+            >
+              {selectedCard.isFavorite
+                ? "Favorite recipe !"
+                : "Add to favorite"}
+            </button>
           </div>
-          <button
-            className={buttonSubmitClassName}
-            type="button"
-            onClick={handleAddFavorite}
-            disabled={selectedCard.isFavorite}
-          >
-            {selectedCard.isFavorite ? "Favorite recipe !" : "Add to favorite"}
-          </button>
         </div>
       </div>
     </div>
