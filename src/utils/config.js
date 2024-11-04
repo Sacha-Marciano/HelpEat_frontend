@@ -1,4 +1,4 @@
-export const scheduleConst = [
+export const SCHEDULECONST = [
   {
     dayIndex: 0,
     name: "Monday",

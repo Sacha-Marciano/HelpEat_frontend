@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import "./Profile.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
-import { getGroceryList } from "../../utils/getGroceryList"; // Adjust the path as needed
+import { getGroceryList } from "../../utils/getGroceryList";
 
 function Profile({
   favoriteList,
@@ -12,8 +12,8 @@ function Profile({
 }) {
   const recipesList = useContext(CurrentRecipesContext);
 
-  // Step 1: Initialize recipesOfWeek by filtering schedule to get IDs of scheduled recipes
-  const [recipesOfWeek, setRecipesOfWeek] = useState(() => {
+  // function for week's recipes init
+  const initializeScheduledRecipes = () => {
     const tempScheduledRecipes = [];
     schedule.forEach((item) => {
       if (item.scheduledRecipes.breakfast) {
@@ -27,11 +27,19 @@ function Profile({
       }
     });
     return tempScheduledRecipes;
-  });
+  };
 
+  const [recipesOfWeek, setRecipesOfWeek] = useState(
+    initializeScheduledRecipes
+  );
   const [groceryList, setGroceryList] = useState([]);
 
-  // Step 2: Generate groceryList using the helper function
+  // Update recipesOfWeek if schedule changes
+  useEffect(() => {
+    setRecipesOfWeek(initializeScheduledRecipes());
+  }, [schedule]);
+
+  // Generate groceryList using the imported function
   useEffect(() => {
     setGroceryList(getGroceryList(recipesOfWeek, recipesList));
   }, [recipesOfWeek, recipesList]);

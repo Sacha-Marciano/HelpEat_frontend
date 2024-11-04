@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 
 import "./Navigation.css";
 
-import avatar from "../../assets/Temp_Avatar.png";
-import helpEatLogo from "../../assets/HelpEatLogo.svg";
-import searchIcon from "../../assets/SearchIcon.svg";
+import avatar from "../../images/Temp_Avatar.png";
+import helpEatLogo from "../../images/HelpEatLogo.svg";
 
 function Navigation({
   isOpen,

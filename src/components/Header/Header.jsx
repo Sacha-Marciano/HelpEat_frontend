@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 import "./Header.css";
 
-import helpEatLogo from "../../assets/HelpEatLogo.svg";
-import avatar from "../../assets/Temp_Avatar.png";
-import navigationIcon from "../../assets/NavigationIcon.svg";
+import helpEatLogo from "../../images/HelpEatLogo.svg";
+import avatar from "../../images/Temp_Avatar.png";
+import navigationIcon from "../../images/NavigationIcon.svg";
 
 function Header({ onNavClick }) {
   return (

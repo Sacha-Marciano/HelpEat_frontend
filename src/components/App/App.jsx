@@ -1,6 +1,6 @@
 // Import methods from libraries
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Import styles
 import "./App.css";
@@ -28,7 +28,7 @@ import AddScheduleModal from "../Popups/AddScheduleModal/AddScheduleModal";
 import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
 
 // Import constants
-import { scheduleConst } from "../../utils/constants";
+import { SCHEDULECONST } from "../../utils/config";
 
 function App() {
   // Hooks
@@ -39,7 +39,7 @@ function App() {
   const [selectedScheduleCard, setSelectedScheduleCard] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [displayedCards, setDisplayedCards] = useState([]);
-  const [schedule, setSchedule] = useState(scheduleConst);
+  const [schedule, setSchedule] = useState(SCHEDULECONST);
   const [validationError, setValidationError] = useState(false);
   const [isShowMore, setIsShowMore] = useState(true);
 
@@ -68,7 +68,6 @@ function App() {
   const handleRecipeCardClick = (card) => {
     setSelectedRecipeCard(card);
     setSelectedPopup("recipe-card-popup");
-    console.log(card.instructions);
   };
   const closePopup = () => {
     setSelectedPopup("");
@@ -85,6 +84,7 @@ function App() {
     setDisplayedCards([...displayedCards, ...newDisplayCard]);
   };
 
+  // Set displayed card back to original display
   const handleResetSearch = () => {
     setDisplayedCards([recipesList[0], recipesList[1], recipesList[2]]);
     setIsShowMore(true);
