@@ -1,6 +1,8 @@
 .page {
   max-width: 1600px;
+  width: 100vw;
   padding: 40px 45px;
+  box-sizing: border-box;
 
   background-color: #dac9b0;
 
