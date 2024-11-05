@@ -11,7 +11,7 @@ import App from "../src/components/App/App";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/HelpEat_frontend">
       <App />
     </BrowserRouter>
   </StrictMode>

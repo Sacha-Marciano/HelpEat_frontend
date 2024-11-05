@@ -6,6 +6,8 @@ Here you will find easy and delicious recipes posted by our users around the wor
 You can also save your favorite recipes and schedule your weekly cooking.
 To save even more time, HelpEat will generate a grocery list just for you !
 
+You can visit the site on [link](https://sacha-marciano.github.io/HelpEat_frontend/)
+
 ## Technical Description
 
 The app uses the third-party API FreeMeal. On each call, the API returns a recipe with an image, ingredients and steps to reproduce.
