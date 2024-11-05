@@ -29,6 +29,10 @@ Clicking on the recipes card in main, profile or schedule card will open a popup
 
 From new to old:
 
+- v1.6.1 Update README
+- v1.6.0 Fix after review, redeploy vi gh-pages
+- v1.5.2 update package.json
+- v1.5.1 fix github pages issue
 - v1.5.0 final check before pull request, update README
 - v1.4.1 fix popups
 - v1.4.0 Add schedule popup, fix navigation functionality, implement grocery list
