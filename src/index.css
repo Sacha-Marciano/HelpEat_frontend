@@ -1,2 +1,8 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts.css);
+
+#root {
+  background-color: #dac9b0;
+  display: flex;
+  justify-content: center;
+}
