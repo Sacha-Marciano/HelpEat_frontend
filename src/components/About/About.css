@@ -1,0 +1,38 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 25px 12px;
+
+  background-color: #703424;
+  border-radius: 10px;
+
+  color: #dac9b0;
+}
+
+.about__title {
+  margin: 0 0 25px 0;
+}
+
+.about__subtitle {
+  margin: 0;
+}
+
+.about__paragraph {
+  text-align: center;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 767px) {
+  .about__title {
+    font-size: 30px;
+  }
+  .about__subtitle {
+    font-size: 20px;
+  }
+  .about__paragraph {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+}

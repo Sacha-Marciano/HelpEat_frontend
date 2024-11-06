@@ -1,0 +1,26 @@
+.modal__button-add {
+  margin: 0 0 0 20px;
+  background-color: #703424;
+  color: #dac9b0;
+  border-radius: 10px;
+}
+.modal__fieldset-ingredients {
+  display: flex;
+  border: none;
+  padding: 0;
+}
+
+.modal__input-upload {
+  display: none;
+}
+
+.modal__label-upload {
+  margin: 0 0 0 20px;
+
+  background-color: #703424;
+  color: #dac9b0;
+  padding: 1px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
