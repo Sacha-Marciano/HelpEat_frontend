@@ -1,5 +1,3 @@
-const authorization = `Bearer ${localStorage.getItem("jwt")}`;
-
 const baseURL =
   process.env.NODE_ENV === "production"
     ? "https://api.helpeat.jumpingcrab.com"
@@ -26,7 +24,7 @@ const addServerRecipe = (data) => {
     method: "POST",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });
@@ -37,7 +35,7 @@ const deleteServerRecipe = (data) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });
@@ -48,7 +46,7 @@ const addFavoriteRecipe = (data) => {
     method: "POST",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });
@@ -59,7 +57,7 @@ const deleteFavoriteRecipe = (data) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });
@@ -70,7 +68,7 @@ const addScheduleRecipe = (data) => {
     method: "POST",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });
@@ -81,7 +79,7 @@ const deleteScheduleRecipe = (data) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
-      authorization: authorization,
+      authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify(data),
   });

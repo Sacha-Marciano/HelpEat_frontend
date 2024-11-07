@@ -77,7 +77,7 @@ function Main({
 
       <div className="main__recipe-container">
         {displayedCards.map((recipe) => {
-          return (
+          return recipe !== undefined ? (
             <RecipeCard
               key={recipe._id}
               isWholeCard={true}
@@ -85,6 +85,8 @@ function Main({
               recipe={recipe}
               onClick={onRecipeCardClick}
             />
+          ) : (
+            ""
           );
         })}
         {isShowMore ? (

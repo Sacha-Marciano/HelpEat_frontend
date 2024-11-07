@@ -11,6 +11,7 @@ function RecipeCardModal({
   onRecipeDelete,
   selectedCard,
   ownerName,
+  isLoggedIn,
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = useContext(CurrentUserContext);
@@ -18,7 +19,7 @@ function RecipeCardModal({
   const isOwner = currentUser._id === selectedCard.owner;
 
   const buttonSubmitClassName = `modal__button-favorite ${
-    isFavorite ? "modal__button-favorite_disabled" : ""
+    isFavorite || !isLoggedIn ? "modal__button-favorite_disabled" : ""
   }`;
 
   const handleRecipeDelete = () => {
@@ -102,9 +103,13 @@ function RecipeCardModal({
               className={buttonSubmitClassName}
               type="button"
               onClick={handleAddFavorite}
-              disabled={isFavorite}
+              disabled={isFavorite || !isLoggedIn}
             >
-              {isFavorite ? "Favorite recipe !" : "Add to favorite"}
+              {!isLoggedIn
+                ? "Log in to save"
+                : isFavorite
+                ? "Favorite recipe !"
+                : "Add to favorite"}
             </button>
           </div>
         </div>
