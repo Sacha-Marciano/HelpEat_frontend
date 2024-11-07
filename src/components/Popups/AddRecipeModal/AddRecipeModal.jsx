@@ -55,13 +55,11 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
   const _handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit({
-      _id: `${Math.random()}`,
       name: data.recipeName,
       image: data.recipeImage,
       ingredients: ingredients,
       measures: measures,
       instructions: steps,
-      isFavorite: true,
     });
   };
 
@@ -107,7 +105,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
           placeholder="Image URL"
           type="url"
           required
-          name="image"
+          name="recipeImage"
           value={data.recipeImage}
           onChange={handleChange}
         />

@@ -1,13 +1,31 @@
+import { useContext } from "react";
+
 import "./RecipeCardModal.css";
 
-function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
-  const handleAddFavorite = () => {
-    onAddFavorite(selectedCard);
-  };
+import { CurrentUserContext } from "../../../contexts/currentUserContext";
+
+function RecipeCardModal({
+  isOpen,
+  onClose,
+  onAddFavorite,
+  onRecipeDelete,
+  selectedCard,
+}) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const isOwner = currentUser._id === selectedCard.owner;
 
   const buttonSubmitClassName = `modal__button-favorite ${
     selectedCard.isFavorite ? "modal__button-favorite_disabled" : ""
   }`;
+
+  const handleRecipeDelete = () => {
+    onRecipeDelete({ recipeId: selectedCard._id });
+  };
+
+  const handleAddFavorite = () => {
+    onAddFavorite({ recipeId: selectedCard._id });
+  };
 
   return (
     <div
@@ -28,6 +46,19 @@ function RecipeCardModal({ isOpen, onClose, onAddFavorite, selectedCard }) {
         />
         <div className="modal__recipe-info">
           <h2 className="modal__recipe-title">{selectedCard.name}</h2>
+          <div className="modal__owner-section">
+            {isOwner ? (
+              <button
+                className="modal__delete-button"
+                type="button"
+                onClick={handleRecipeDelete}
+              >
+                Delete recipe
+              </button>
+            ) : (
+              <p className="modal__owner-name">by Owner</p>
+            )}
+          </div>
           <div className="modal__recipe">
             <p className="modal__recipe-subtitle">Ingredients :</p>
 

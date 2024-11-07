@@ -104,13 +104,15 @@ function AddScheduleModal({
           value={data.recipeId}
           name="recipeId"
         >
-          {favoriteList.map((item) => {
-            return (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            );
-          })}
+          {favoriteList.length > 0
+            ? favoriteList.map((item) => {
+                return (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                );
+              })
+            : ""}
         </select>
       </label>
     </ModalWithForm>

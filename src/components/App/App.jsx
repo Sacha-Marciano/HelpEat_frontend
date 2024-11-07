@@ -39,7 +39,15 @@ import { SCHEDULECONST } from "../../utils/config";
 import { signUserIn, signUserUp, getUserByToken } from "../../utils/auth";
 
 // Import API calls
-import { getServerRecipes } from "../../utils/mainApi";
+import {
+  getServerRecipes,
+  addServerRecipe,
+  deleteServerRecipe,
+  addFavoriteRecipe,
+  deleteFavoriteRecipe,
+  addScheduleRecipe,
+  deleteScheduleRecipe,
+} from "../../utils/mainApi";
 
 function App() {
   // Hooks
@@ -50,7 +58,7 @@ function App() {
   const [selectedScheduleCard, setSelectedScheduleCard] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [displayedCards, setDisplayedCards] = useState([]);
-  const [schedule, setSchedule] = useState(SCHEDULECONST);
+  const [schedule, setSchedule] = useState([]);
   const [validationError, setValidationError] = useState(false);
   const [isShowMore, setIsShowMore] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -110,18 +118,38 @@ function App() {
   };
 
   // Add selected card to favorite array
-  const handleAddFavorite = (recipe) => {
-    recipesList.find((item) => item._id === recipe._id).isFavorite = true;
-    setFavoriteList([recipe, ...favoriteList]);
+  const handleAddFavorite = (recipeId) => {
+    addFavoriteRecipe(recipeId)
+      .then((response) => {
+        setFavoriteList(getFavoriteList(response));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   // Remove selected card from favorite array
-  const handleDeleteFavorite = (recipe) => {
-    recipesList.find((item) => item._id === recipe._id).isFavorite = false;
-    const tempFavorites = favoriteList.filter(
-      (item) => item._id !== recipe._id
-    );
-    setFavoriteList(tempFavorites);
+  const handleDeleteFavorite = (recipeId) => {
+    deleteFavoriteRecipe(recipeId)
+      .then((response) => {
+        setFavoriteList(getFavoriteList(response));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // Gets favorite list by ID
+  const getFavoriteList = (data) => {
+    const newFavoriteList = [];
+    if (data) {
+      data.forEach((recipeId) => {
+        newFavoriteList.push(
+          ...recipesList.filter((recipe) => recipe._id === recipeId)
+        );
+      });
+    }
+    return newFavoriteList;
   };
 
   // Set displayed card according to search query
@@ -141,26 +169,51 @@ function App() {
     }
   };
 
-  // Set a new recipe to recipes list array
+  // Set a new recipeto server then to recipes list array
   const handleRecipeSubmit = (item) => {
-    setRecipesList([item, ...recipesList]);
-    setFavoriteList([item, ...favoriteList]);
-    closePopup();
+    addServerRecipe(item)
+      .then((data) => {
+        setRecipesList([data, ...recipesList]);
+        closePopup();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // Delete recipe from server then from recipes list array
+  const handleRecipeDelete = (data) => {
+    deleteServerRecipe(data)
+      .then((deletedRecipe) => {
+        setRecipesList(
+          recipesList.filter((recipe) => recipe._id !== deletedRecipe._id)
+        );
+        closePopup();
+      })
+      .catch((err) => console.error(err));
   };
 
   // Set a recipe ID in the schedule for asked time
   const handleScheduleSubmit = (data) => {
-    const tempSchedule = [...schedule];
-    tempSchedule[data.dayIndex].scheduledRecipes[data.time] = data.recipeId;
-    setSchedule(tempSchedule);
-    closePopup();
+    addScheduleRecipe(data)
+      .then((newSchedule) => {
+        setSchedule(newSchedule);
+        closePopup();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   // Remove recipe ID from shedule
   const handleScheduleDelete = (data) => {
-    const tempSchedule = [...schedule];
-    tempSchedule[data.dayIndex].scheduledRecipes[data.time] = "";
-    setSchedule(tempSchedule);
+    deleteScheduleRecipe(data)
+      .then((newSchedule) => {
+        setSchedule(newSchedule);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   //Checks if login is succesfull and add token to local storage
@@ -207,7 +260,6 @@ function App() {
         setRecipesList(recipes);
         setDisplayedCards([recipes[0], recipes[1], recipes[2]]);
       })
-
       .catch((err) => console.error(err))
       .finally(() => {
         setIsLoading(false);
@@ -221,12 +273,18 @@ function App() {
           <Navigate to="/" />;
         }
         setCurrentUser(response);
+        setSchedule(response.schedule);
         setIsLoggedIn(true);
       })
       .catch((err) => {
         console.error(`${err} - User is not logged in`);
       });
   }, []);
+
+  // Set favorite list when user or recipes list are changed
+  useEffect(() => {
+    setFavoriteList(getFavoriteList(currentUser.favoriteRecipesId));
+  }, [recipesList, currentUser]);
 
   // Rerender displayed cards when recipes list is changed
   useEffect(() => {
@@ -320,6 +378,7 @@ function App() {
             isOpen={selectedPopup === "recipe-card-popup"}
             onClose={closePopup}
             onAddFavorite={handleAddFavorite}
+            onRecipeDelete={handleRecipeDelete}
             selectedCard={selectedRecipeCard}
           />
           <SearchModal
