@@ -1,7 +1,13 @@
 import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function SearchModal({ isOpen, onClose, onSearch, validationError }) {
+function SearchModal({
+  isOpen,
+  onClose,
+  onSearch,
+  validationError,
+  setValidationError,
+}) {
   const [data, setData] = useState({ recipeSearch: "" });
 
   const handleChange = (evt) => {
@@ -10,6 +16,7 @@ function SearchModal({ isOpen, onClose, onSearch, validationError }) {
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
   const _handleSubmit = (evt) => {

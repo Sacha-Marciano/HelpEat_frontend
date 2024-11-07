@@ -4,11 +4,17 @@ import "./AddRecipeModal.css";
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function AddRecipeModal({ isOpen, onClose, onSubmit }) {
+function AddRecipeModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  validationError,
+  setValidationError,
+}) {
   const [measures, setMeasures] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
     recipeName: "",
@@ -24,13 +30,14 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
-  const handleImageUpload = (evt) => {
-    const file = evt.target.files[0];
-    const imageURL = URL.createObjectURL(file);
-    setImage(imageURL);
-  };
+  // const handleImageUpload = (evt) => {
+  //   const file = evt.target.files[0];
+  //   const imageURL = URL.createObjectURL(file);
+  //   setImage(imageURL);
+  // };
 
   const handleAddIngredient = (evt) => {
     evt.preventDefault();
@@ -55,13 +62,11 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
   const _handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit({
-      _id: `${Math.random()}`,
       name: data.recipeName,
-      image: image,
+      image: data.recipeImage,
       ingredients: ingredients,
       measures: measures,
       instructions: steps,
-      isFavorite: true,
     });
   };
 
@@ -72,6 +77,8 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
       isOpen={isOpen}
       onSubmit={_handleSubmit}
       buttonText="Save"
+      validationError={validationError}
+      validationErrorText="Something went wrong... Check your data and retry"
     >
       <label className="modal__label">
         Name of the recipe*
@@ -86,7 +93,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
           onChange={handleChange}
         />
       </label>
-      <label className="modal__label">
+      {/* <label className="modal__label">
         Image*
         <label htmlFor="file-upload-id" className="modal__label-upload">
           Choose File
@@ -97,6 +104,19 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
+        />
+      </label> */}
+      <label className="modal__label">
+        Image*
+        <input
+          className="modal__input"
+          id="image"
+          placeholder="Image URL"
+          type="url"
+          required
+          name="recipeImage"
+          value={data.recipeImage}
+          onChange={handleChange}
         />
       </label>
       <label className="modal__label">

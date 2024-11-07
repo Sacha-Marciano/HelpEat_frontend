@@ -9,8 +9,9 @@ function AddScheduleModal({
   favoriteList,
   schedule,
   selectedScheduleCard,
+  validationError,
+  setValidationError,
 }) {
-  const [validationError, setValidationError] = useState(false);
   const [data, setData] = useState({
     dayIndex: 0,
     time: "breakfast",
@@ -23,6 +24,7 @@ function AddScheduleModal({
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
   const _handleSubmit = (evt) => {
@@ -74,13 +76,15 @@ function AddScheduleModal({
           <option key={"default"} value={selectedScheduleCard.dayIndex}>
             {selectedScheduleCard.name}
           </option>
-          {schedule.map((day) => {
-            return (
-              <option key={day.dayIndex} value={day.dayIndex}>
-                {day.name}
-              </option>
-            );
-          })}
+          {schedule !== undefined
+            ? schedule.map((day) => {
+                return (
+                  <option key={day.dayIndex} value={day.dayIndex}>
+                    {day.name}
+                  </option>
+                );
+              })
+            : ""}
         </select>
       </label>
       <label className="modal__label">
@@ -104,13 +108,15 @@ function AddScheduleModal({
           value={data.recipeId}
           name="recipeId"
         >
-          {favoriteList.map((item) => {
-            return (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            );
-          })}
+          {favoriteList.length > 0
+            ? favoriteList.map((item) => {
+                return (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                );
+              })
+            : ""}
         </select>
       </label>
     </ModalWithForm>

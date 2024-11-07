@@ -17,7 +17,7 @@ function RecipeCard({
 
   const handleDeleteCard = (evt) => {
     evt.stopPropagation();
-    onDeleteFavorite(recipe);
+    onDeleteFavorite({ recipeId: recipe._id });
   };
 
   return isWholeCard ? (

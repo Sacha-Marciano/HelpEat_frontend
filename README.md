@@ -6,7 +6,8 @@ Here you will find easy and delicious recipes posted by our users around the wor
 You can also save your favorite recipes and schedule your weekly cooking.
 To save even more time, HelpEat will generate a grocery list just for you !
 
-You can visit the site on [link](https://sacha-marciano.github.io/HelpEat_frontend/)
+You can visit the deployed site right [here](https://helpeat.jumpingcrab.com/)
+Backend repo : https://github.com/Sacha-Marciano/HelpEat_backend
 
 ## Technical Description
 
@@ -29,6 +30,9 @@ Clicking on the recipes card in main, profile or schedule card will open a popup
 
 From new to old:
 
+- v2.1.1 Style and fix new components, update README
+- v2.1.0 Finish backend intrgation, connect frontend actions and calls to main API
+- v2.0.0 Start backend integration, implement login and signup
 - v1.6.1 Update README
 - v1.6.0 Fix after review, redeploy vi gh-pages
 - v1.5.2 update package.json
@@ -52,7 +56,8 @@ From new to old:
 
 ### Credits
 
-Idea and design - Dana Marciano
-Favicon - nawicon on Flaticon
-Close Icon - inkubators on Flaticon
-API - freemeal.com
+- Idea and design - Dana Marciano
+- Favicon - nawicon on Flaticon
+- Close Icon - inkubators on Flaticon
+- API - freemeal.com
+- Toque icon - Nikita Golubev

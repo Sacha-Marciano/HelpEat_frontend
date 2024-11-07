@@ -3,8 +3,8 @@ import "./About.css";
 function About() {
   return (
     <div className="about">
-      <h1 className="about__title">About us</h1>
-      <h2 className="about__subtitle">Why HelpEat ?</h2>
+      <h3 className="about__title">About us</h3>
+      <h3 className="about__subtitle">Why HelpEat ?</h3>
       <p className="about__paragraph">
         Helpeat is perfect for anyone looking to simplify meal planning and make
         cooking more enjoyable and stress-free. With easy access to diverse
@@ -15,7 +15,7 @@ function About() {
         healthier, explore new cuisines, or simply streamline your cooking
         routine, Helpeat brings convenience and variety right to your kitchen!
       </p>
-      <h2 className="about__subtitle">How HelpEat ?</h2>
+      <h3 className="about__subtitle">How HelpEat ?</h3>
       <p className="about__paragraph">
         Helpeat offers a seamless and user-friendly experience for discovering
         and organizing recipes. With the search feature, users can explore a
@@ -26,7 +26,7 @@ function About() {
         profile, which includes saved favorite recipes and a customized grocery
         list, ensuring that all essential ingredients are just a click away.
       </p>
-      <h2 className="about__subtitle">Who HelpEat ?</h2>
+      <h3 className="about__subtitle">Who HelpEat ?</h3>
       <p className="about__paragraph">
         Sacha and Dana Marciano are just your average, slightly sleep-deprived
         young parents with a newborn and, let’s be real, very little patience
