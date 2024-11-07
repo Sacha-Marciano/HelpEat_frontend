@@ -43,13 +43,24 @@
   opacity: 0.4;
 }
 
-.header__username {
-  margin: 0;
+.header__user-info {
+  display: flex;
 }
 
-.header__avatar {
-  height: 60px;
-  width: 60px;
+.header__username {
+  margin: 0 10px 0 0;
+}
+
+.header__logout {
+  height: 20px;
+  width: 20px;
+
+  transition: transform linear 0.2s;
+}
+
+.header__logout:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {

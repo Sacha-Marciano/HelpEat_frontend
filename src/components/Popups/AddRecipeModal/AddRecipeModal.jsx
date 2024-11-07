@@ -8,7 +8,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
   const [measures, setMeasures] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
 
   const [data, setData] = useState({
     recipeName: "",
@@ -26,11 +26,11 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
     }));
   };
 
-  const handleImageUpload = (evt) => {
-    const file = evt.target.files[0];
-    const imageURL = URL.createObjectURL(file);
-    setImage(imageURL);
-  };
+  // const handleImageUpload = (evt) => {
+  //   const file = evt.target.files[0];
+  //   const imageURL = URL.createObjectURL(file);
+  //   setImage(imageURL);
+  // };
 
   const handleAddIngredient = (evt) => {
     evt.preventDefault();
@@ -57,7 +57,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
     onSubmit({
       _id: `${Math.random()}`,
       name: data.recipeName,
-      image: image,
+      image: data.recipeImage,
       ingredients: ingredients,
       measures: measures,
       instructions: steps,
@@ -86,7 +86,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
           onChange={handleChange}
         />
       </label>
-      <label className="modal__label">
+      {/* <label className="modal__label">
         Image*
         <label htmlFor="file-upload-id" className="modal__label-upload">
           Choose File
@@ -97,6 +97,19 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
+        />
+      </label> */}
+      <label className="modal__label">
+        Image*
+        <input
+          className="modal__input"
+          id="image"
+          placeholder="Image URL"
+          type="url"
+          required
+          name="image"
+          value={data.recipeImage}
+          onChange={handleChange}
         />
       </label>
       <label className="modal__label">

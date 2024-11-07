@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 // Import styles
 import "./App.css";
 
-// Import API methods
+// Import third-party API methods
 import { getRecipes } from "../../utils/freeMealApi";
 
 //Import components
@@ -23,12 +23,23 @@ import RecipeCardModal from "../Popups/RecipeCardModal/RecipeCardModal";
 import SearchModal from "../Popups/SearchModal/SearchModal";
 import AddRecipeModal from "../Popups/AddRecipeModal/AddRecipeModal";
 import AddScheduleModal from "../Popups/AddScheduleModal/AddScheduleModal";
+import LoginModal from "../Popups/LoginModal/LoginModal";
+import RegisterModal from "../Popups/RegisterModal/RegisterModal";
+
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 // Import contexts
 import { CurrentRecipesContext } from "../../contexts/currentRecipesContext";
+import { CurrentUserContext } from "../../contexts/currentUserContext";
 
 // Import constants
 import { SCHEDULECONST } from "../../utils/config";
+
+// Import API authentication methods
+import { signUserIn, signUserUp, getUserByToken } from "../../utils/auth";
+
+// Import API calls
+import { getServerRecipes } from "../../utils/mainApi";
 
 function App() {
   // Hooks
@@ -42,6 +53,8 @@ function App() {
   const [schedule, setSchedule] = useState(SCHEDULECONST);
   const [validationError, setValidationError] = useState(false);
   const [isShowMore, setIsShowMore] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   // Open and close popups
   const handleNavClick = () => {
@@ -68,6 +81,12 @@ function App() {
   const handleRecipeCardClick = (card) => {
     setSelectedRecipeCard(card);
     setSelectedPopup("recipe-card-popup");
+  };
+  const handleLoginClick = () => {
+    setSelectedPopup("login-popup");
+  };
+  const handleSignupClick = () => {
+    setSelectedPopup("signup-popup");
   };
   const closePopup = () => {
     setSelectedPopup("");
@@ -144,10 +163,46 @@ function App() {
     setSchedule(tempSchedule);
   };
 
+  //Checks if login is succesfull and add token to local storage
+  const handleLogin = (data) => {
+    signUserIn(data)
+      .then((response) => {
+        localStorage.setItem("jwt", response.token);
+        return getUserByToken(localStorage.getItem("jwt"));
+      })
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+        closePopup();
+      })
+      .catch((err) => {
+        setValidationError(true);
+        console.log(err);
+      });
+  };
+
+  //Check if data is valid and add a user to server then log user in
+  const handleSignUp = (data) => {
+    signUserUp(data)
+      .then(() => {
+        handleLogin({ email: data.email, password: data.password });
+        closePopup();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  //Removes the token from local storage on log out
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+  };
+
   // On page load/refresh
   useEffect(() => {
     setIsLoading(true);
-    getRecipes(15)
+    getServerRecipes()
       .then((recipes) => {
         setRecipesList(recipes);
         setDisplayedCards([recipes[0], recipes[1], recipes[2]]);
@@ -156,6 +211,20 @@ function App() {
       .catch((err) => console.error(err))
       .finally(() => {
         setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getUserByToken(localStorage.getItem("jwt"))
+      .then((response) => {
+        if (!response) {
+          <Navigate to="/" />;
+        }
+        setCurrentUser(response);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.error(`${err} - User is not logged in`);
       });
   }, []);
 
@@ -191,77 +260,104 @@ function App() {
   }, [selectedPopup]);
 
   return (
-    <CurrentRecipesContext.Provider value={recipesList}>
-      <div className="page">
-        <Header onNavClick={handleNavClick} />
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route
-            path="/"
-            element={
-              isLoading ? (
-                <Preloader />
-              ) : (
-                <Main
-                  onRecipeCardClick={handleRecipeCardClick}
-                  onShowMoreClick={handleShowMore}
-                  onScheduleClick={handleScheduleClick}
-                  onDeleteClick={handleScheduleDelete}
-                  onResetSearch={handleResetSearch}
-                  displayedCards={displayedCards}
-                  schedule={schedule}
-                  isShowMore={isShowMore}
-                />
-              )
-            }
+    <CurrentUserContext.Provider value={currentUser}>
+      <CurrentRecipesContext.Provider value={recipesList}>
+        <div className="page">
+          <Header
+            onNavClick={handleNavClick}
+            onLogout={handleLogout}
+            onLoginClick={handleLoginClick}
+            onSignupClick={handleSignupClick}
+            isLoggedIn={isLoggedIn}
           />
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                favoriteList={favoriteList}
-                schedule={schedule}
-                onRecipeCardClick={handleRecipeCardClick}
-                onDeleteFavorite={handleDeleteFavorite}
-              />
-            }
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route
+              path="/"
+              element={
+                isLoading ? (
+                  <Preloader />
+                ) : (
+                  <Main
+                    onRecipeCardClick={handleRecipeCardClick}
+                    onShowMoreClick={handleShowMore}
+                    onScheduleClick={handleScheduleClick}
+                    onDeleteClick={handleScheduleDelete}
+                    onResetSearch={handleResetSearch}
+                    onLoginClick={handleLoginClick}
+                    onSignupClick={handleSignupClick}
+                    displayedCards={displayedCards}
+                    schedule={schedule}
+                    isShowMore={isShowMore}
+                    isLoggedIn={isLoggedIn}
+                  />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    favoriteList={favoriteList}
+                    schedule={schedule}
+                    onRecipeCardClick={handleRecipeCardClick}
+                    onDeleteFavorite={handleDeleteFavorite}
+                  />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+          <About />
+          <Footer />
+          <Navigation
+            isOpen={selectedPopup === "navigation-popup"}
+            onClickSearch={handleSearchClick}
+            onClickAddRecipe={handleAddRecipeClick}
+            onClickScheduleRecipe={handleAddScheduleClick}
           />
-        </Routes>
-        <About />
-        <Footer />
-        <Navigation
-          isOpen={selectedPopup === "navigation-popup"}
-          onClickSearch={handleSearchClick}
-          onClickAddRecipe={handleAddRecipeClick}
-          onClickScheduleRecipe={handleAddScheduleClick}
-        />
-        <RecipeCardModal
-          isOpen={selectedPopup === "recipe-card-popup"}
-          onClose={closePopup}
-          onAddFavorite={handleAddFavorite}
-          selectedCard={selectedRecipeCard}
-        />
-        <SearchModal
-          isOpen={selectedPopup === "search-popup"}
-          onClose={closePopup}
-          onSearch={handleSearch}
-          validationError={validationError}
-        />
-        <AddRecipeModal
-          isOpen={selectedPopup === "add-recipe-popup"}
-          onClose={closePopup}
-          onSubmit={handleRecipeSubmit}
-        />
-        <AddScheduleModal
-          isOpen={selectedPopup === "schedule-popup"}
-          onClose={closePopup}
-          onSubmit={handleScheduleSubmit}
-          favoriteList={favoriteList}
-          schedule={schedule}
-          selectedScheduleCard={selectedScheduleCard}
-        />
-      </div>
-    </CurrentRecipesContext.Provider>
+          <RecipeCardModal
+            isOpen={selectedPopup === "recipe-card-popup"}
+            onClose={closePopup}
+            onAddFavorite={handleAddFavorite}
+            selectedCard={selectedRecipeCard}
+          />
+          <SearchModal
+            isOpen={selectedPopup === "search-popup"}
+            onClose={closePopup}
+            onSearch={handleSearch}
+            validationError={validationError}
+          />
+          <AddRecipeModal
+            isOpen={selectedPopup === "add-recipe-popup"}
+            onClose={closePopup}
+            onSubmit={handleRecipeSubmit}
+          />
+          <AddScheduleModal
+            isOpen={selectedPopup === "schedule-popup"}
+            onClose={closePopup}
+            onSubmit={handleScheduleSubmit}
+            favoriteList={favoriteList}
+            schedule={schedule}
+            selectedScheduleCard={selectedScheduleCard}
+          />
+          <LoginModal
+            isOpen={selectedPopup === "login-popup"}
+            onClose={closePopup}
+            onSubmit={handleLogin}
+            setSelectedPopup={setSelectedPopup}
+            validationError={validationError}
+            setValidationError={setValidationError}
+          />
+          <RegisterModal
+            isOpen={selectedPopup === "signup-popup"}
+            onClose={closePopup}
+            onSubmit={handleSignUp}
+            setSelectedPopup={setSelectedPopup}
+          />
+        </div>
+      </CurrentRecipesContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

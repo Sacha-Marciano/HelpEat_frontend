@@ -4,6 +4,21 @@
   flex-direction: column;
 }
 
+.main__presentation {
+  background-color: #703424;
+  color: #fff;
+
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main__presentation-paragraph {
+  text-align: center;
+}
+
 .main__schedule {
   margin: 0;
   padding: 0 0 30px 20px;
