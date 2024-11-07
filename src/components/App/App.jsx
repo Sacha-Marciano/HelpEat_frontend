@@ -375,7 +375,10 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn} setSelectedPopup={setSelectedPopup}>
+                <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  setSelectedPopup={setSelectedPopup}
+                >
                   <Profile
                     favoriteList={favoriteList}
                     schedule={schedule}
@@ -402,6 +405,7 @@ function App() {
             onRecipeDelete={handleRecipeDelete}
             selectedCard={selectedRecipeCard}
             ownerName={ownerName}
+            isLoggedIn={isLoggedIn}
           />
           <SearchModal
             isOpen={selectedPopup === "search-popup"}

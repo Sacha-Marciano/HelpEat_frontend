@@ -76,13 +76,15 @@ function AddScheduleModal({
           <option key={"default"} value={selectedScheduleCard.dayIndex}>
             {selectedScheduleCard.name}
           </option>
-          {schedule.map((day) => {
-            return (
-              <option key={day.dayIndex} value={day.dayIndex}>
-                {day.name}
-              </option>
-            );
-          })}
+          {schedule !== undefined
+            ? schedule.map((day) => {
+                return (
+                  <option key={day.dayIndex} value={day.dayIndex}>
+                    {day.name}
+                  </option>
+                );
+              })
+            : ""}
         </select>
       </label>
       <label className="modal__label">
