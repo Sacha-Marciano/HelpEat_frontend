@@ -47,6 +47,7 @@ import {
   deleteFavoriteRecipe,
   addScheduleRecipe,
   deleteScheduleRecipe,
+  getOwner,
 } from "../../utils/mainApi";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
   const [isShowMore, setIsShowMore] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [ownerName, setOwnerName] = useState("");
 
   // Open and close popups
   const handleNavClick = () => {
@@ -88,7 +90,8 @@ function App() {
   };
   const handleRecipeCardClick = (card) => {
     setSelectedRecipeCard(card);
-    setSelectedPopup("recipe-card-popup");
+    getOwnerName(card.owner);
+    // setSelectedPopup("recipe-card-popup");
   };
   const handleLoginClick = () => {
     setSelectedPopup("login-popup");
@@ -177,6 +180,7 @@ function App() {
         closePopup();
       })
       .catch((err) => {
+        setValidationError(true);
         console.error(err);
       });
   };
@@ -201,6 +205,7 @@ function App() {
         closePopup();
       })
       .catch((err) => {
+        setValidationError(true);
         console.error(err);
       });
   };
@@ -216,6 +221,18 @@ function App() {
       });
   };
 
+  // Finds card owner's name
+  const getOwnerName = (data) => {
+    getOwner(data)
+      .then((newOwnerName) => {
+        setOwnerName(newOwnerName.ownerName);
+        setSelectedPopup("recipe-card-popup");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   //Checks if login is succesfull and add token to local storage
   const handleLogin = (data) => {
     signUserIn(data)
@@ -225,6 +242,7 @@ function App() {
       })
       .then((user) => {
         setCurrentUser(user);
+        setSchedule(user.schedule);
         setIsLoggedIn(true);
         closePopup();
       })
@@ -237,11 +255,13 @@ function App() {
   //Check if data is valid and add a user to server then log user in
   const handleSignUp = (data) => {
     signUserUp(data)
-      .then(() => {
+      .then((user) => {
         handleLogin({ email: data.email, password: data.password });
+        setSchedule(user.schedule);
         closePopup();
       })
       .catch((err) => {
+        setValidationError(true);
         console.error(err);
       });
   };
@@ -250,6 +270,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
+    closePopup();
   };
 
   // On page load/refresh
@@ -323,7 +344,6 @@ function App() {
         <div className="page">
           <Header
             onNavClick={handleNavClick}
-            onLogout={handleLogout}
             onLoginClick={handleLoginClick}
             onSignupClick={handleSignupClick}
             isLoggedIn={isLoggedIn}
@@ -373,6 +393,7 @@ function App() {
             onClickSearch={handleSearchClick}
             onClickAddRecipe={handleAddRecipeClick}
             onClickScheduleRecipe={handleAddScheduleClick}
+            onLogout={handleLogout}
           />
           <RecipeCardModal
             isOpen={selectedPopup === "recipe-card-popup"}
@@ -380,17 +401,21 @@ function App() {
             onAddFavorite={handleAddFavorite}
             onRecipeDelete={handleRecipeDelete}
             selectedCard={selectedRecipeCard}
+            ownerName={ownerName}
           />
           <SearchModal
             isOpen={selectedPopup === "search-popup"}
             onClose={closePopup}
             onSearch={handleSearch}
             validationError={validationError}
+            setValidationError={setValidationError}
           />
           <AddRecipeModal
             isOpen={selectedPopup === "add-recipe-popup"}
             onClose={closePopup}
             onSubmit={handleRecipeSubmit}
+            validationError={validationError}
+            setValidationError={setValidationError}
           />
           <AddScheduleModal
             isOpen={selectedPopup === "schedule-popup"}
@@ -399,6 +424,8 @@ function App() {
             favoriteList={favoriteList}
             schedule={schedule}
             selectedScheduleCard={selectedScheduleCard}
+            validationError={validationError}
+            setValidationError={setValidationError}
           />
           <LoginModal
             isOpen={selectedPopup === "login-popup"}
@@ -413,6 +440,8 @@ function App() {
             onClose={closePopup}
             onSubmit={handleSignUp}
             setSelectedPopup={setSelectedPopup}
+            validationError={validationError}
+            setValidationError={setValidationError}
           />
         </div>
       </CurrentRecipesContext.Provider>

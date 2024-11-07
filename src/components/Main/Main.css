@@ -19,6 +19,15 @@
   text-align: center;
 }
 
+.main__presentation-button {
+  margin: 0 5px;
+
+  background-color: #dac9b0;
+  color: #703424;
+
+  border-radius: 10px;
+}
+
 .main__schedule {
   margin: 0;
   padding: 0 0 30px 20px;

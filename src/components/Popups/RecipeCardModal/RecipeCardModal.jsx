@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import "./RecipeCardModal.css";
 
@@ -10,13 +10,15 @@ function RecipeCardModal({
   onAddFavorite,
   onRecipeDelete,
   selectedCard,
+  ownerName,
 }) {
+  const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
   const isOwner = currentUser._id === selectedCard.owner;
 
   const buttonSubmitClassName = `modal__button-favorite ${
-    selectedCard.isFavorite ? "modal__button-favorite_disabled" : ""
+    isFavorite ? "modal__button-favorite_disabled" : ""
   }`;
 
   const handleRecipeDelete = () => {
@@ -24,8 +26,15 @@ function RecipeCardModal({
   };
 
   const handleAddFavorite = () => {
+    setIsFavorite(true);
     onAddFavorite({ recipeId: selectedCard._id });
   };
+
+  useEffect(() => {
+    if (currentUser.favoriteRecipesId) {
+      setIsFavorite(currentUser.favoriteRecipesId.includes(selectedCard._id));
+    }
+  }, [isOpen]);
 
   return (
     <div
@@ -56,7 +65,7 @@ function RecipeCardModal({
                 Delete recipe
               </button>
             ) : (
-              <p className="modal__owner-name">by Owner</p>
+              <p className="modal__owner-name">by {ownerName}</p>
             )}
           </div>
           <div className="modal__recipe">
@@ -93,11 +102,9 @@ function RecipeCardModal({
               className={buttonSubmitClassName}
               type="button"
               onClick={handleAddFavorite}
-              disabled={selectedCard.isFavorite}
+              disabled={isFavorite}
             >
-              {selectedCard.isFavorite
-                ? "Favorite recipe !"
-                : "Add to favorite"}
+              {isFavorite ? "Favorite recipe !" : "Add to favorite"}
             </button>
           </div>
         </div>

@@ -4,7 +4,13 @@ import "./AddRecipeModal.css";
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function AddRecipeModal({ isOpen, onClose, onSubmit }) {
+function AddRecipeModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  validationError,
+  setValidationError,
+}) {
   const [measures, setMeasures] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [steps, setSteps] = useState([]);
@@ -24,6 +30,7 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
   // const handleImageUpload = (evt) => {
@@ -70,6 +77,8 @@ function AddRecipeModal({ isOpen, onClose, onSubmit }) {
       isOpen={isOpen}
       onSubmit={_handleSubmit}
       buttonText="Save"
+      validationError={validationError}
+      validationErrorText="Something went wrong... Check your data and retry"
     >
       <label className="modal__label">
         Name of the recipe*

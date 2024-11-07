@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 
-function RegisterModal({ isOpen, onClose, setSelectedPopup, onSubmit }) {
+function RegisterModal({
+  isOpen,
+  onClose,
+  setSelectedPopup,
+  onSubmit,
+  validationError,
+  setValidationError,
+}) {
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -14,6 +21,7 @@ function RegisterModal({ isOpen, onClose, setSelectedPopup, onSubmit }) {
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
   const _handleSubmit = (evt) => {
@@ -43,6 +51,8 @@ function RegisterModal({ isOpen, onClose, setSelectedPopup, onSubmit }) {
       buttonText="Next"
       alternateOptionText="or Log in"
       alternateOptionHandler={handleRedirect}
+      validationError={validationError}
+      validationErrorText="Something went wrong... Check your data and try again"
     >
       <label className="modal__label">
         Email*

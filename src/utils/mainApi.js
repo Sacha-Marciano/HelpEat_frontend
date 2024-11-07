@@ -87,6 +87,10 @@ const deleteScheduleRecipe = (data) => {
   });
 };
 
+const getOwner = (data) => {
+  return request(`users/${data}/name`);
+};
+
 export {
   request,
   getServerRecipes,
@@ -96,4 +100,5 @@ export {
   deleteFavoriteRecipe,
   addScheduleRecipe,
   deleteScheduleRecipe,
+  getOwner,
 };

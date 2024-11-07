@@ -9,8 +9,9 @@ function AddScheduleModal({
   favoriteList,
   schedule,
   selectedScheduleCard,
+  validationError,
+  setValidationError,
 }) {
-  const [validationError, setValidationError] = useState(false);
   const [data, setData] = useState({
     dayIndex: 0,
     time: "breakfast",
@@ -23,6 +24,7 @@ function AddScheduleModal({
       ...prevData,
       [name]: value,
     }));
+    setValidationError(false);
   };
 
   const _handleSubmit = (evt) => {

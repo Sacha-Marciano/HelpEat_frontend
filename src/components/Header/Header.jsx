@@ -4,18 +4,12 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 
 import helpEatLogo from "../../images/HelpEatLogo.svg";
-import logoutIcon from "../../images/LogoutIcon.svg";
+import toqueIcon from "../../images/Toque.png";
 import navigationIcon from "../../images/NavigationIcon.svg";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
-function Header({
-  onNavClick,
-  onLogout,
-  onLoginClick,
-  onSignupClick,
-  isLoggedIn,
-}) {
+function Header({ onNavClick, onLoginClick, onSignupClick, isLoggedIn }) {
   const user = useContext(CurrentUserContext);
 
   return (
@@ -38,12 +32,7 @@ function Header({
           <Link to="/profile" className="header__link-profile">
             <span className="header__username"> {user.name}</span>
           </Link>
-          <img
-            className="header__logout"
-            src={logoutIcon}
-            alt="LogoutIcon"
-            onClick={onLogout}
-          />
+          <img className="header__avatar" src={toqueIcon} alt="Toque icon" />
         </div>
       ) : (
         <div className="header__user-actions">
