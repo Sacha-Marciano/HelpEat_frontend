@@ -375,7 +375,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <ProtectedRoute isLoggedIn={isLoggedIn} setSelectedPopup={setSelectedPopup}>
                   <Profile
                     favoriteList={favoriteList}
                     schedule={schedule}
