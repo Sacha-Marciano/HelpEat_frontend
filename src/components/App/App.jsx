@@ -91,7 +91,6 @@ function App() {
   const handleRecipeCardClick = (card) => {
     setSelectedRecipeCard(card);
     getOwnerName(card.owner);
-    // setSelectedPopup("recipe-card-popup");
   };
   const handleLoginClick = () => {
     setSelectedPopup("login-popup");
@@ -375,10 +374,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
-                  setSelectedPopup={setSelectedPopup}
-                >
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
                     favoriteList={favoriteList}
                     schedule={schedule}
