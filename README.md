@@ -11,6 +11,19 @@ Backend repo : https://github.com/Sacha-Marciano/HelpEat_backend .
 
 ## Screenshot from the app
 
+![Screenshot 2024-11-10 103357](https://github.com/user-attachments/assets/3876c8dc-cd8b-4a58-b58b-ee185bbcef32)
+![Screenshot 2024-11-10 103831](https://github.com/user-attachments/assets/6441d0bf-3f0f-446e-bf32-cfd7935009f5)
+After the you're logged in you can start build your own week menu.
+
+![Screenshot 2024-11-10 105928](https://github.com/user-attachments/assets/f3c858f6-a86a-4a04-96eb-3f7e48ee28ff)
+When clicking on a recipe in the schedule, feed or profile it will fully open and show you everything you need to succeed
+
+![Screenshot 2024-11-10 103857](https://github.com/user-attachments/assets/f3e8ce49-be9c-46c3-98b1-3e50d4f0bcda)
+The navigation is intuitive and you can do every action from there.
+
+![Screenshot 2024-11-10 103737](https://github.com/user-attachments/assets/a6228e0e-4fec-4758-bd81-b63757d3106c)
+In your profile you will find all your favorite recipes and a cutom grocery list for all the recipes in your week menu.
+The grocery list gets updated everytime you add or delete a recipe from your eat schedule !
 
 ## Technical Description
 
