@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sacha-marciano.github.io/HelpEat_frontend/",
+  "homepage": "https://helpeat.jumpingcrab.com",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && scp -r ./dist/* momarciano26@helpeat.jumpingcrab.com:/home/momarciano26/frontend"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -53,6 +53,8 @@
   text-decoration: none;
   color: #000;
   font-weight: normal;
+
+  display: flex;
 }
 
 .navigation__username {
@@ -81,6 +83,20 @@
 
 .navigation__button:hover {
   opacity: 0.5;
+}
+
+.navigation__icon {
+  height: 20px;
+  width: 20px;
+
+  margin: 0 0 0 10px;
+
+  transition: transform linear 0.2s;
+}
+
+.navigation__icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 650px) {
