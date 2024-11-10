@@ -6,14 +6,16 @@ Here you will find easy and delicious recipes posted by our users around the wor
 You can also save your favorite recipes and schedule your weekly cooking.
 To save even more time, HelpEat will generate a grocery list just for you !
 
-You can visit the deployed site right [here](https://helpeat.jumpingcrab.com/)
-Backend repo : https://github.com/Sacha-Marciano/HelpEat_backend
+You can visit the deployed site right [here](https://helpeat.jumpingcrab.com/).
+Backend repo : https://github.com/Sacha-Marciano/HelpEat_backend .
+
+## Screenshot from the app
+
 
 ## Technical Description
 
-The app uses the third-party API FreeMeal. On each call, the API returns a recipe with an image, ingredients and steps to reproduce.
-The user can save recipes as it's favorite and add a eat schedule.
-Based on the ingredients of the meals in the eat schedule, HelpEat will generate a personalized grocery list.
+The app was built using React CRA, connects to an Express server on a Virtual Machine on Google Cloud via . It uses different Node.js libraries as bcryptjs for password hash encryptions and uses React known methods as UseState and UseEffect to control variables.
+Users data is securely saved and can be accesible anytime.
 
 ## How to
 
@@ -51,8 +53,7 @@ From new to old:
 
 ### Future upgrades
 
-- Implement back-end that will replace the third party API (will be used as recipe database)
-- Implement users handling in back-end(will be used to personalize feed based on user)
+- Release better UI for mobile format
 
 ### Credits
 
