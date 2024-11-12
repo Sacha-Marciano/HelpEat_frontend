@@ -101,3 +101,21 @@
     font-size: 20px;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .recipe-card__title-only {
+    font-size: 14px;
+    height: 20px;
+    margin: 0;
+    width: 100px;
+  }
+  .recipe-card {
+    height: 200px;
+    margin: 0 0 10px;
+  }
+  .recipe-card__title {
+    font-size: 14px;
+
+    height: 20px;
+  }
+}

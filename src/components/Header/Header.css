@@ -4,6 +4,10 @@
   background-color: #dac9b0;
 }
 
+.header_hidden {
+  background-color: rgba(85, 79, 69, 0);
+}
+
 .header__navigation-icon {
   height: 40px;
   width: 40px;
@@ -85,22 +89,36 @@
   }
 }
 
-@media screen and (max-width: 431px) {
+@media screen and (max-width: 500px) {
   .header {
-    width: 100%;
+    width: 100vw;
     position: fixed;
     top: 0px;
     left: 0px;
 
-    padding: 10px 20px;
+    padding: 10px 10px 0;
 
-    z-index: 1;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+  }
+  .header__logo {
+    width: 150px;
+    height: 30px;
   }
 
   .header__link-profile {
-    display: none;
+    align-items: center;
   }
   .header__link-main {
-    margin: 0 auto;
+    height: 30px;
+    margin: 0 10px;
+  }
+
+  .header__navigation-icon {
+    display: none;
   }
 }

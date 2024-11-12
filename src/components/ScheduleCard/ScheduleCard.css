@@ -86,9 +86,22 @@
 
 @media screen and (max-width: 650px) {
   .schedule-card {
-    min-width: 280px;
+    width: 280px;
   }
   .schedule-card:hover {
     transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .schedule-card {
+    min-width: 140px;
+  }
+  .schedule-card__delete-button {
+    height: 16px;
+    width: 16px;
+  }
+  .schedule-card__recipe {
+    justify-content: space-between;
   }
 }

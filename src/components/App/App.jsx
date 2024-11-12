@@ -16,6 +16,7 @@ import Profile from "../Profile/Profile";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
 import NotFound from "../NotFound/NotFound";
+import MobileNav from "../Navigation/MobileNav";
 
 // Import popups
 import Navigation from "../Navigation/Navigation";
@@ -65,6 +66,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [ownerName, setOwnerName] = useState("");
+  const [width, SetWidth] = useState(window.innerWidth);
 
   // Open and close popups
   const handleNavClick = () => {
@@ -102,15 +104,10 @@ function App() {
     setSelectedPopup("");
   };
 
-  // Set 3 more recipes from recipes list to display
+  // Shoul upgrade to randomize (mathfloor,mathrandom(0 - arr.length), until the number is less than the arr length
+  // then display the recipe, then pop the recipe from the arr and do again until empty)
   const handleShowMore = () => {
-    const newDisplayCard = [];
-    for (let i = 0; i < 3; i++) {
-      if (recipesList[displayedCards.length + i]) {
-        newDisplayCard.push(recipesList[displayedCards.length + i]);
-      }
-    }
-    setDisplayedCards([...displayedCards, ...newDisplayCard]);
+    setDisplayedCards(recipesList);
   };
 
   // Set displayed card back to original display
@@ -173,7 +170,6 @@ function App() {
 
   // Set a new recipeto server then to recipes list array
   const handleRecipeSubmit = (item) => {
-    console.log(item);
     addServerRecipe(item)
       .then((data) => {
         setRecipesList([data, ...recipesList]);
@@ -347,6 +343,7 @@ function App() {
             onLoginClick={handleLoginClick}
             onSignupClick={handleSignupClick}
             isLoggedIn={isLoggedIn}
+            selectedPopup={selectedPopup}
           />
           <Routes>
             <Route path="*" element={<NotFound />} />
@@ -388,13 +385,22 @@ function App() {
           </Routes>
           <About />
           <Footer />
-          <Navigation
-            isOpen={selectedPopup === "navigation-popup"}
-            onClickSearch={handleSearchClick}
-            onClickAddRecipe={handleAddRecipeClick}
-            onClickScheduleRecipe={handleAddScheduleClick}
-            onLogout={handleLogout}
-          />
+          {width > 500 ? (
+            <Navigation
+              isOpen={selectedPopup === "navigation-popup"}
+              onClickSearch={handleSearchClick}
+              onClickAddRecipe={handleAddRecipeClick}
+              onClickScheduleRecipe={handleAddScheduleClick}
+              onLogout={handleLogout}
+            />
+          ) : (
+            <MobileNav
+              onClickSearch={handleSearchClick}
+              onClickAddRecipe={handleAddRecipeClick}
+              onClickScheduleRecipe={handleAddScheduleClick}
+              onLogout={handleLogout}
+            />
+          )}
           <RecipeCardModal
             isOpen={selectedPopup === "recipe-card-popup"}
             onClose={closePopup}

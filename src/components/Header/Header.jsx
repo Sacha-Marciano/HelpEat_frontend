@@ -9,11 +9,17 @@ import navigationIcon from "../../images/NavigationIcon.svg";
 
 import { CurrentUserContext } from "../../contexts/currentUserContext";
 
-function Header({ onNavClick, onLoginClick, onSignupClick, isLoggedIn }) {
+function Header({
+  onNavClick,
+  onLoginClick,
+  onSignupClick,
+  isLoggedIn,
+  selectedPopup,
+}) {
   const user = useContext(CurrentUserContext);
 
   return (
-    <header className="header">
+    <header className={`header ${selectedPopup !== "" ? "header_hidden" : ""}`}>
       {isLoggedIn ? (
         <img
           className="header__navigation-icon"
