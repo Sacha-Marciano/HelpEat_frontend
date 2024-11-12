@@ -173,6 +173,7 @@ function App() {
 
   // Set a new recipeto server then to recipes list array
   const handleRecipeSubmit = (item) => {
+    console.log(item);
     addServerRecipe(item)
       .then((data) => {
         setRecipesList([data, ...recipesList]);

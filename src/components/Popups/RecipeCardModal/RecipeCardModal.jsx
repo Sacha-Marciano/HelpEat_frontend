@@ -4,6 +4,8 @@ import "./RecipeCardModal.css";
 
 import { CurrentUserContext } from "../../../contexts/currentUserContext";
 
+import { baseURL } from "../../../utils/mainApi";
+
 function RecipeCardModal({
   isOpen,
   onClose,
@@ -51,7 +53,7 @@ function RecipeCardModal({
         />
         <img
           className="modal__image"
-          src={selectedCard.image}
+          src={`${baseURL}${selectedCard.imageUrl}`}
           alt="Recipe image"
         />
         <div className="modal__recipe-info">

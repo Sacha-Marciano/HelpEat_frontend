@@ -1,5 +1,7 @@
 import "./RecipeCard.css";
 
+import { baseURL } from "../../utils/mainApi";
+
 function RecipeCard({
   isWholeCard,
   isInProfile,
@@ -8,7 +10,7 @@ function RecipeCard({
   onDeleteFavorite,
 }) {
   const backgroundImage = {
-    backgroundImage: `url(${recipe.image})`,
+    backgroundImage: `url(${baseURL}${recipe.imageUrl})`,
   };
 
   const handleClick = () => {
