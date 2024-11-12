@@ -393,13 +393,15 @@ function App() {
               onClickScheduleRecipe={handleAddScheduleClick}
               onLogout={handleLogout}
             />
-          ) : (
+          ) : isLoggedIn ? (
             <MobileNav
               onClickSearch={handleSearchClick}
               onClickAddRecipe={handleAddRecipeClick}
               onClickScheduleRecipe={handleAddScheduleClick}
               onLogout={handleLogout}
             />
+          ) : (
+            ""
           )}
           <RecipeCardModal
             isOpen={selectedPopup === "recipe-card-popup"}
