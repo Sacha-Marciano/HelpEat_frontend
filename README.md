@@ -25,10 +25,27 @@ The navigation is intuitive and you can do every action from there.
 In your profile you will find all your favorite recipes and a cutom grocery list for all the recipes in your week menu.
 The grocery list gets updated everytime you add or delete a recipe from your eat schedule !
 
-## Technical Description
+##Technical Overview
 
-The app was built using React CRA, connects to an Express server on a Virtual Machine on Google Cloud via . It uses different Node.js libraries as bcryptjs for password hash encryptions and uses React known methods as UseState and UseEffect to control variables.
-Users data is securely saved and can be accesible anytime.
+This application is developed using React with Create React App (CRA) and connects to an Express server hosted on a Virtual Machine within Google Cloud. The server-client communication leverages various Node.js libraries, including bcryptjs for secure password hashing.
+
+###Front-End
+
+The front-end is built using React and employs well-known React hooks such as useState and useEffect for efficient state and lifecycle management.
+
+###Back-End
+
+The back-end is powered by an Express server, handling all API requests and serving as the main point of communication with the database.
+
+###Security
+
+User data is securely stored and managed, ensuring it remains accessible whenever required. The use of bcryptjs enhances security by encrypting passwords, thus safeguarding user credentials.
+
+###Hosting
+
+The application is deployed on a Google Cloud Virtual Machine, providing reliable and scalable hosting for both the front-end and back-end components.
+
+This architecture ensures a seamless and secure user experience while maintaining high performance and scalability.
 
 ## How to
 
