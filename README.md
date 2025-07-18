@@ -1,94 +1,171 @@
-# HelpEat app
+# HelpEat Frontend
 
-This is the HelpEat app front-end.
-Helpeat is a webapp that wants to help you manage your eating schedule.
-Here you will find easy and delicious recipes posted by our users around the world.
-You can also save your favorite recipes and schedule your weekly cooking.
-To save even more time, HelpEat will generate a grocery list just for you !
+[![HelpEat Logo](src/images/HelpEatLogo.svg)](https://helpeat.jumpingcrab.com)
 
-You can visit the deployed site right [here](https://helpeat.jumpingcrab.com/).
-Backend repo : https://github.com/Sacha-Marciano/HelpEat_backend .
+**HelpEat** is a modern web application designed to simplify meal planning, recipe discovery, and grocery management. Users can browse and share recipes, schedule their weekly meals, and automatically generate a grocery list based on their planned menu. The app is built with React and connects to a Node.js/Express backend.
 
-## Screenshot from the app
+---
 
-![Screenshot 2024-11-10 103357](https://github.com/user-attachments/assets/3876c8dc-cd8b-4a58-b58b-ee185bbcef32)
-![Screenshot 2024-11-10 103831](https://github.com/user-attachments/assets/6441d0bf-3f0f-446e-bf32-cfd7935009f5)
-After the you're logged in you can start build your own week menu.
+## 🌟 Features
 
-![Screenshot 2024-11-10 105928](https://github.com/user-attachments/assets/f3c858f6-a86a-4a04-96eb-3f7e48ee28ff)
-When clicking on a recipe in the schedule, feed or profile it will fully open and show you everything you need to succeed
+- **Recipe Discovery:** Browse a curated feed of worldwide recipes, including user-submitted and random recipes from [TheMealDB](https://themealdb.com/).
+- **User Accounts:** Register and log in to save your favorite recipes, manage your weekly meal schedule, and access your personalized grocery list.
+- **Add & Share Recipes:** Create and upload your own recipes, including images, ingredients, and step-by-step instructions.
+- **Meal Scheduling:** Plan your week by assigning recipes to breakfast, lunch, and dinner for each day.
+- **Grocery List Generation:** Instantly generate a grocery list based on your scheduled recipes, with smart unit conversion.
+- **Favorites:** Mark recipes as favorites for quick access and easy scheduling.
+- **Responsive Design:** Fully responsive UI with dedicated mobile navigation.
+- **Intuitive Navigation:** Access all features from a single, user-friendly menu.
+- **Secure Authentication:** JWT-based authentication with secure password handling.
 
-![Screenshot 2024-11-10 103857](https://github.com/user-attachments/assets/f3e8ce49-be9c-46c3-98b1-3e50d4f0bcda)
-The navigation is intuitive and you can do every action from there.
+---
 
-![Screenshot 2024-11-10 103737](https://github.com/user-attachments/assets/a6228e0e-4fec-4758-bd81-b63757d3106c)
-In your profile you will find all your favorite recipes and a cutom grocery list for all the recipes in your week menu.
-The grocery list gets updated everytime you add or delete a recipe from your eat schedule !
+## 🖼️ Screenshots
 
-## Technical Overview
+> Replace the image URLs below with your actual screenshots if needed.
 
-This application is developed using React with Create React App (CRA) and connects to an Express server hosted on a Virtual Machine within Google Cloud. The server-client communication leverages various Node.js libraries, including bcryptjs for secure password hashing.
+- **Home & Recipe Feed:**
+  ![Screenshot Home](https://github.com/user-attachments/assets/3876c8dc-cd8b-4a58-b58b-ee185bbcef32)
+  ![Screenshot Feed](https://github.com/user-attachments/assets/6441d0bf-3f0f-446e-bf32-cfd7935009f5)
+- **Recipe Details:**
+  ![Screenshot Recipe Details](https://github.com/user-attachments/assets/f3c858f6-a86a-4a04-96eb-3f7e48ee28ff)
+- **Navigation & Profile:**
+  ![Screenshot Navigation](https://github.com/user-attachments/assets/f3e8ce49-be9c-46c3-98b1-3e50d4f0bcda)
+  ![Screenshot Profile](https://github.com/user-attachments/assets/a6228e0e-4fec-4758-bd81-b63757d3106c)
 
-### Front-End
+---
 
-The front-end is built using React and employs well-known React hooks such as useState and useEffect for efficient state and lifecycle management.
+## 🚀 Live Demo
 
-### Back-End
+- **Frontend:** [https://helpeat.jumpingcrab.com/](https://helpeat.jumpingcrab.com/)
+- **Backend:** [HelpEat Backend Repo](https://github.com/Sacha-Marciano/HelpEat_backend)
 
-The back-end is powered by an Express server, handling all API requests and serving as the main point of communication with the database.
+---
 
-### Security
+## 🛠️ Technology Stack
 
-User data is securely stored and managed, ensuring it remains accessible whenever required. The use of bcryptjs enhances security by encrypting passwords, thus safeguarding user credentials.
+- **Frontend:** React 18, Vite, React Router DOM, Axios
+- **State Management:** React Context API
+- **Styling:** CSS Modules, Responsive Design
+- **Backend:** Node.js, Express (see backend repo)
+- **APIs:**
+  - Custom HelpEat API (see backend)
+  - [TheMealDB](https://themealdb.com/) for random recipes
+- **Authentication:** JWT (JSON Web Token)
+- **Deployment:** Google Cloud VM (production), Vite dev server (local)
 
-### Hosting
+---
 
-The application is deployed on a Google Cloud Virtual Machine, providing reliable and scalable hosting for both the front-end and back-end components.
+## 🏗️ Project Structure
 
-This architecture ensures a seamless and secure user experience while maintaining high performance and scalability.
+```
+HelpEat_frontend/
+├── src/
+│   ├── components/         # React components (UI, modals, navigation, etc.)
+│   ├── contexts/           # React Contexts for user and recipes
+│   ├── images/             # App icons and images
+│   ├── utils/              # API, config, and helper functions
+│   ├── index.css           # Global styles
+│   └── main.jsx            # App entry point
+├── index.html              # HTML entry point
+├── package.json            # Project metadata and scripts
+├── vite.config.js          # Vite configuration
+└── ...
+```
 
-## How to
+---
 
-The app menu contains the following features :
+## ⚙️ Setup & Installation
 
-- Navigate to profile (accessible also when clicking on username)
-- Search a recipe - displays search result and a button to reset the research
-- Add a recipe - add a custom recipe, displays it and mark it as favorite
-- Schedule a recipe (accesible when clicking on schedule card) - add a recipe to schedule card and calculate a grocery list every time a recipe is added
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
-Clicking on the recipes card in main, profile or schedule card will open a popup with all the recipe info
+### 1. Clone the repository
+```bash
+git clone https://github.com/Sacha-Marciano/HelpEat_frontend.git
+cd HelpEat_frontend
+```
 
-## Updates
+### 2. Install dependencies
+```bash
+npm install
+```
 
-From new to old:
+### 3. Configure environment (optional)
+- By default, the frontend connects to:
+  - `http://localhost:3001` in development
+  - `https://api.helpeat.jumpingcrab.com` in production
+- If you need to change the backend URL, edit `src/utils/mainApi.js`.
 
-- v2.1.1 Style and fix new components, update README
-- v2.1.0 Finish backend intrgation, connect frontend actions and calls to main API
-- v2.0.0 Start backend integration, implement login and signup
-- v1.6.1 Update README
-- v1.6.0 Fix after review, redeploy vi gh-pages
-- v1.5.2 update package.json
-- v1.5.1 fix github pages issue
-- v1.5.0 final check before pull request, update README
-- v1.4.1 fix popups
-- v1.4.0 Add schedule popup, fix navigation functionality, implement grocery list
-- v1.3.0 First API implementation, fix code to handle API response format
-- v1.2.0 Implement grocery list and favorites in profile, imrove search and add recipe features
-- v1.1.2 Implement add recipe modal
-- v1.1.1 Implement search modal functionality
-- v1.1.0 JSX and markup - design only
-- v1.0.2 Create JSX for Header, About and Footer components
-- v1.0.1 Structure directories
-- v1.0.0 Create a React + Vite app and update README
+### 4. Start the development server
+```bash
+npm run dev
+```
+- The app will open at [http://localhost:3000](http://localhost:3000)
 
-### Future upgrades
+### 5. Build for production
+```bash
+npm run build
+```
+- Output will be in the `dist/` directory.
 
-- Release better UI for mobile format
+### 6. Preview production build
+```bash
+npm run preview
+```
 
-### Credits
+---
 
-- Idea and design - Dana Marciano
-- Favicon - nawicon on Flaticon
-- Close Icon - inkubators on Flaticon
-- API - freemeal.com
-- Toque icon - Nikita Golubev
+## 🔑 Environment & Configuration
+
+- **API URLs:**
+  - Automatically switches between local and production based on `NODE_ENV`.
+- **No additional environment variables are required for the frontend by default.**
+- **Authentication:**
+  - JWT tokens are stored in `localStorage` after login.
+
+---
+
+## 👩‍💻 Usage Guide
+
+1. **Register** for a new account or **log in**.
+2. **Browse recipes** on the main page or use the search feature.
+3. **Add recipes** to your favorites or create your own.
+4. **Schedule meals** for each day and meal time.
+5. **View your grocery list** in your profile, auto-generated from your schedule.
+6. **Enjoy cooking!**
+
+---
+
+## 📝 Credits & Attributions
+
+- **Idea & Design:** Dana Marciano
+- **Development:** Sacha M. Marciano
+- **Favicon:** nawicon on Flaticon
+- **Close Icon:** inkubators on Flaticon
+- **Toque Icon:** Nikita Golubev
+- **API:** [TheMealDB](https://themealdb.com/)
+- **Other Icons:** Various from SVG Repo and Flaticon
+
+---
+
+## 📈 Changelog
+
+See commit history and release notes for details.
+
+---
+
+## 🚧 Future Improvements
+
+- Enhanced mobile UI/UX
+- More robust error handling and validation
+- Social features (comments, ratings)
+- Recipe categories and filters
+- Improved accessibility
+
+---
+
+## 📄 License
+
+This project is for educational and demonstration purposes. For other uses, please contact the author.
